@@ -1,0 +1,8 @@
+r.txt
+r2.txt
+venv
+.idea
+__pycache__
+*.srt
+test_SrtParser.py
+
