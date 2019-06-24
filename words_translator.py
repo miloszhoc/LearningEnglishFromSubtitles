@@ -12,7 +12,7 @@ class TranslateMicrosoft:
         self.headers = {}
 
     # constructing url request
-    # overloaded method
+    # 'overloaded' method (one method - two jobs)
     def construct_request(self, with_frequency=False):
         base_url = 'https://api.cognitive.microsofttranslator.com'
         path = '/dictionary/lookup?api-version=3.0&'
