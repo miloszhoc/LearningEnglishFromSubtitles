@@ -11,7 +11,7 @@ def main(arg):
     # with_freq = parser.words_with_frequency()
 
     trans = words_translator.TranslateMicrosoft(without_freq,
-                                                api_key='9dcd4058b8ee4bd88b9838bda9a6f890')
+                                                api_key='')
     trans.translate_words()
 
 
