@@ -1,8 +1,8 @@
 import sys
 
-import words_translator
+import lefs.words_translator as words_translator
 
-from srt_parser import SrtToWords
+from lefs.srt_parser import SrtToWords
 
 
 def main(arg):
@@ -11,7 +11,7 @@ def main(arg):
     # with_freq = parser.words_with_frequency()
 
     trans = words_translator.TranslateMicrosoft(without_freq,
-                                                api_key='')
+                                                api_key='9dcd4058b8ee4bd88b9838bda9a6f890')
     trans.translate_words()
 
 
