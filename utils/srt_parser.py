@@ -1,21 +1,24 @@
 import re
 
 
-class SrtToWords:
-    def __init__(self, arg):
-        self._file = arg
+class SrtParser:
+    def __init__(self, file):
+        self._file = file
         self.all_words = []
         self.words_frequency = []
 
     # generator which reads srt file line by line
     def read_srt_file(self):
-        with open(self._file, 'r') as f:
-            for line in f:
-                yield line
+        try:
+            with open(self._file, 'r') as f:
+                for line in f:
+                    yield line
+        except FileNotFoundError:
+            print('File does not exist.\nCheck your path or file name.')
+            return False
 
     def get_words_from_file(self):
         pattern_without_num = r"[^0-9]"  # getting rid of numbers at the beginning (eg. time)
-        # pattern_text = r"\w+'?\w+"  # takes only text
         pattern_text = r"[a-zA-Z]+'?[a-zA-Z]+"  # takes only text
 
         # iterates through lines of file and extends
@@ -26,10 +29,10 @@ class SrtToWords:
         return self.all_words
 
     def words_without_repetitions(self):
+        self.get_words_from_file()
         return list(set(self.all_words))
 
     def words_with_frequency(self, descending=True, min_len=1):
-
         all_words = self.get_words_from_file()
         temp = set()
 

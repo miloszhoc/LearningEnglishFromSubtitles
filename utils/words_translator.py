@@ -3,6 +3,7 @@ import uuid
 import requests
 
 
+# uses microsoft translator api
 class TranslateMicrosoft:
     def __init__(self, words_list, api_key, dest_lang='pl'):
         self._words_list = words_list
@@ -13,6 +14,7 @@ class TranslateMicrosoft:
 
     # constructing url request
     # 'overloaded' method (one method - two jobs)
+
     def construct_request(self, with_frequency=False):
         base_url = 'https://api.cognitive.microsofttranslator.com'
         path = '/dictionary/lookup?api-version=3.0&'
@@ -41,10 +43,10 @@ class TranslateMicrosoft:
                 yield req.json()
 
     def translate_words(self):
-        print('Translation in progress...\n')
+        print('Translation in progress...\nPlease wait, process can take up to 5min')
         for i in self.construct_request():
 
-            # some words can't be translated
+            # some words or numbers can't be translated
             # that's why script checks if list with translations has length greater than 0
             if len(i[0]['translations']) > 0:
                 self.translated_words[i[0]['displaySource'].lower()] = i[0]['translations'][0]['displayTarget'].lower()
