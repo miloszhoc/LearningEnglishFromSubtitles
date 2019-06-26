@@ -18,8 +18,8 @@ class SrtParser:
             return False
 
     def get_words_from_file(self):
-        pattern_without_num = r"[^0-9]"  # getting rid of numbers at the beginning (eg. time)
-        pattern_text = r"[a-zA-Z]+'?[a-zA-Z]+"  # takes only text
+        pattern_without_num = r"\D"  # get rid of all numbers
+        pattern_text = r"[a-zA-Z]+'?[a-zA-Z]+"  # search only for text
 
         # iterates through lines of file and extends
         # words list by only words from subtitles
