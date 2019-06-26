@@ -1,24 +1,37 @@
 import uuid
 
 import requests
+import json
 
 
 # uses microsoft translator api
 class TranslateMicrosoft:
-    def __init__(self, words_list, api_key, dest_lang='pl'):
+    def __init__(self, words_list, api_key):
         self._words_list = words_list
         self.subscriptionKey = api_key
-        self.dest_lang = dest_lang
+
         self.translated_words = {}
         self.headers = {}
 
+    # codes for all languages
+    # useful if you want translate subtitles from specific language to another
+    @staticmethod
+    def show_all_languages():
+        languages = {}
+        url = r'https://api.cognitive.microsofttranslator.com/languages?api-version=3.0'
+        r = requests.get(url).json()
+        for key, val in r['translation'].items():
+            languages[val['name']] = key
+        return languages
+
     # constructing url request
     # 'overloaded' method (one method - two jobs)
-
-    def construct_request(self, with_frequency=False):
+    # user has to pass src language if it's different than english
+    # and dest language if it's different than polish
+    def construct_request(self, src_lang='en', dest_lang='pl', with_frequency=False):
         base_url = 'https://api.cognitive.microsofttranslator.com'
         path = '/dictionary/lookup?api-version=3.0&'
-        params = 'from=en&to={}'.format(self.dest_lang)
+        params = 'from={0}&to={1}'.format(src_lang, dest_lang)
         constructed_url = base_url + path + params
 
         # headers
@@ -53,5 +66,5 @@ class TranslateMicrosoft:
         print('\n---Translated---')
 
     def translate_words_with_frequency(self):
-        for i, j in zip(self._words_list, self.construct_request(True)):
+        for i, j in zip(self._words_list, self.construct_request(with_frequency=True)):
             pass
