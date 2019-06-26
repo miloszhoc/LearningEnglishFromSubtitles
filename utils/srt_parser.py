@@ -4,7 +4,6 @@ import re
 class SrtParser:
     def __init__(self, file):
         self._file = file
-        self.all_words = []
         self.words_frequency = []
 
     # generator which reads srt file line by line
@@ -18,6 +17,7 @@ class SrtParser:
             return False
 
     def get_words_from_file(self):
+        all_words = []
         pattern_without_num = r"\D"  # get rid of all numbers
         pattern_text = r"[a-zA-Z]+'?[a-zA-Z]+"  # search only for text
 
@@ -25,24 +25,28 @@ class SrtParser:
         # words list by only words from subtitles
         for i in self.read_srt_file():
             if re.match(pattern_without_num, i):
-                self.all_words.extend(re.findall(pattern_text, i.lower()))
-        return self.all_words
+                all_words.extend(re.findall(pattern_text, i.lower()))
+        return all_words
 
     def words_without_repetitions(self):
-        self.get_words_from_file()
-        return list(set(self.all_words))
+        return list(set(self.get_words_from_file()))
 
-    def words_with_frequency(self, descending=True, min_len=1):
+    def words_with_frequency(self, descending=True, min_len=1, min_occurs=1):
         all_words = self.get_words_from_file()
         temp = set()
 
-        # counts repetitions
+        # counts repetitions for every word
         for i in all_words:
             temp.add((all_words.count(i), i))
 
-        # list contains tuple - (word, how many times it occurs)
-        for i in sorted(temp, reverse=descending):
-            if len(i[1]) >= min_len:
-                self.words_frequency.append((i[1], str(i[0])))
+        if min_len > 0 and min_occurs > 0:
+            # list contains tuples - (word, how many times it occurs)
+            for word in sorted(temp, reverse=descending):
+                if len(word[1]) >= min_len and word[0] >= min_occurs:
+                    self.words_frequency.append((word[1], str(word[0])))
+            return self.words_frequency
 
-        return self.words_frequency
+        else:
+            print('Minimal word length can\'t be less or equal 0')
+            print('Minimal word frequency can\'t  be less or equal 0')
+            return False
