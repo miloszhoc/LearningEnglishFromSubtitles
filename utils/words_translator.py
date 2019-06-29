@@ -1,17 +1,18 @@
 import uuid
 
 import requests
-import json
 
 
 # uses microsoft translator api
 class TranslateMicrosoft:
-    def __init__(self, words_list, api_key):
+    def __init__(self, words_list, api_key, src_lang='en', dest_lang='pl'):
         self._words_list = words_list
         self.subscriptionKey = api_key
+        self.src_lang = src_lang
+        self.dest_lang = dest_lang
 
         self.translated_words = {}
-        self.headers = {}
+        # self.headers = {}
 
     # codes for all languages
     # useful if you want translate subtitles from specific language to another
@@ -28,10 +29,10 @@ class TranslateMicrosoft:
     # 'overloaded' method (one method - two jobs)
     # user has to pass src language if it's different than english
     # and dest language if it's different than polish
-    def construct_request(self, src_lang='en', dest_lang='pl', with_frequency=False):
+    def construct_request(self, with_frequency=False):
         base_url = 'https://api.cognitive.microsofttranslator.com'
         path = '/dictionary/lookup?api-version=3.0&'
-        params = 'from={0}&to={1}'.format(src_lang, dest_lang)
+        params = 'from={0}&to={1}'.format(self.src_lang, self.dest_lang)
         constructed_url = base_url + path + params
 
         # headers
