@@ -7,19 +7,41 @@ import requests
 class TranslateMicrosoft:
     def __init__(self, words_list, api_key, src_lang='en', dest_lang='pl'):
         # dictionary contains Language: code
-        languages = TranslateMicrosoft.show_all_languages()
-
         # keys contains languages in readable form eg. 'English', 'Polish', 'German'
         # values contains languages codes eg. 'en', 'fr', 'pl'
-        # connecting two lists is necessary in order to reduce if statements
-        languages_all = list(languages.keys()) + list(languages.values())
+        languages = TranslateMicrosoft.show_all_languages()
 
-        # checks if language is supported by Translator
-        if src_lang in languages_all and dest_lang in languages_all:
+        # list of language codes used for final check
+        languages_codes = list(languages.values())
+
+        # code checks if language given by user is in language codes
+        # if it is src_lang is set to value given by user
+        # else it checks if user typed for example 'English'
+        # if both cases are false variable is set to ''
+        if src_lang in languages_codes:
             self.src_lang = src_lang
+        else:
+            for readable, code in languages.items():
+                if src_lang in readable:
+                    self.src_lang = code
+                    break
+            else:
+                self.src_lang = ''
+
+        if dest_lang in languages_codes:
             self.dest_lang = dest_lang
         else:
-            print('Language Error')
+            for readable, code in languages.items():
+                if dest_lang in readable:
+                    self.dest_lang = code
+                    break
+            else:
+                self.dest_lang = ''
+
+        # 'final check' checks if language is supported by Translator
+        if self.src_lang in languages_codes and self.dest_lang in languages_codes:
+            pass
+        else:
             raise ValueError
 
         self._words_list = words_list
