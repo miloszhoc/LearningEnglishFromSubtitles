@@ -6,16 +6,29 @@ import requests
 # uses microsoft translator api
 class TranslateMicrosoft:
     def __init__(self, words_list, api_key, src_lang='en', dest_lang='pl'):
+        # dictionary contains Language: code
+        languages = TranslateMicrosoft.show_all_languages()
+
+        # keys contains languages in readable form eg. 'English', 'Polish', 'German'
+        # values contains languages codes eg. 'en', 'fr', 'pl'
+        # connecting two lists is necessary in order to reduce if statements
+        languages_all = list(languages.keys()) + list(languages.values())
+
+        # checks if language is supported by Translator
+        if src_lang in languages_all and dest_lang in languages_all:
+            self.src_lang = src_lang
+            self.dest_lang = dest_lang
+        else:
+            print('Language Error')
+            raise ValueError
+
         self._words_list = words_list
         self.subscriptionKey = api_key
-        self.src_lang = src_lang
-        self.dest_lang = dest_lang
-
         self.translated_words = {}
-        # self.headers = {}
 
-    # codes for all languages
+    # codes of all languages
     # useful if you want translate subtitles from specific language to another
+    # dictionary contains - Language: code
     @staticmethod
     def show_all_languages():
         languages = {}
@@ -47,7 +60,10 @@ class TranslateMicrosoft:
                 req = requests.post(constructed_url,
                                     headers=headers,
                                     json=body)
-                yield req.json()
+                if req.status_code == 200:
+                    yield req.json()
+                else:
+                    return False
 
         else:
             for word in self._words_list:
@@ -72,7 +88,6 @@ class TranslateMicrosoft:
 
     def translate_words_with_frequency(self):
         print('Translation in progress...\nPlease wait, process can take up to 5min')
-
         for original, translated in zip(self._words_list, self.construct_request(with_frequency=True)):
             # some words or numbers can't be translated
             # that's why script checks if list with translations has length greater than 0
