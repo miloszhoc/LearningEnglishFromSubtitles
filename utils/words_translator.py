@@ -22,7 +22,7 @@ class TranslateMicrosoft:
             self.src_lang = src_lang
         else:
             for readable, code in languages.items():
-                if src_lang in readable:
+                if src_lang.capitalize() in readable:
                     self.src_lang = code
                     break
             else:
@@ -32,7 +32,7 @@ class TranslateMicrosoft:
             self.dest_lang = dest_lang
         else:
             for readable, code in languages.items():
-                if dest_lang in readable:
+                if dest_lang.capitalize() in readable:
                     self.dest_lang = code
                     break
             else:
@@ -49,14 +49,14 @@ class TranslateMicrosoft:
         self.translated_words = {}
 
     # codes of all languages
-    # useful if you want translate subtitles from specific language to another
+    # useful if you want translate words from specific language to another
     # dictionary contains - Language: code
     @staticmethod
     def show_all_languages():
         languages = {}
-        url = r'https://api.cognitive.microsofttranslator.com/languages?api-version=3.0'
+        url = r'https://api.cognitive.microsofttranslator.com/languages?api-version=3.0&scope=dictionary'
         r = requests.get(url).json()
-        for key, val in r['translation'].items():
+        for key, val in r['dictionary'].items():
             languages[val['name']] = key
         return languages
 
