@@ -94,5 +94,6 @@ class TestSrtParser(unittest.TestCase):
         words = parser.words_with_frequency(min_len=3, min_occurs=2, descending=False)
         self.assertListEqual(words, [('white', '2')])
 
-    if __name__ == '__main__':
-        unittest.main()
+
+if __name__ == '__main__':
+    unittest.main()
