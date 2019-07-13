@@ -53,8 +53,8 @@ class TranslateWordsMicrosoft:
             raise ValueError
 
         self._words_list = words_list
-        self.subscriptionKey = api_key
-        self.translated_words = {}
+        self._subscriptionKey = api_key
+        self._translated_words = {}
 
     # codes of all languages
     # useful if you want translate words from specific language to another
@@ -70,7 +70,7 @@ class TranslateWordsMicrosoft:
 
     # constructing url request
     # 'overloaded' method (one method - two jobs)
-    def construct_request(self, with_frequency=False):
+    def _construct_request(self, with_frequency=False):
         base_url = 'https://api.cognitive.microsofttranslator.com'
         path = '/dictionary/lookup?api-version=3.0&'
         params = 'from={0}&to={1}'.format(self.src_lang, self.dest_lang)
@@ -78,7 +78,7 @@ class TranslateWordsMicrosoft:
 
         # headers
         headers = {
-            'Ocp-Apim-Subscription-Key': self.subscriptionKey,
+            'Ocp-Apim-Subscription-Key': self._subscriptionKey,
             'Content-type': 'application/json',
             'X-ClientTraceId': str(uuid.uuid4())}
 
@@ -110,22 +110,22 @@ class TranslateWordsMicrosoft:
 
     def translate_words(self):
         print('Translation in progress...\nPlease wait, process can take up to 5min')
-        for i in self.construct_request():
+        for i in self._construct_request():
 
             # some words or numbers can't be translated
             # that's why script checks if list with translations has length greater than 0
             if len(i[0]['translations']) > 0:
-                self.translated_words[i[0]['displaySource'].lower()] = i[0]['translations'][0]['displayTarget'].lower()
+                self._translated_words[i[0]['displaySource'].lower()] = i[0]['translations'][0]['displayTarget'].lower()
         print('\nAll words translated!')
-        return self.translated_words
+        return self._translated_words
 
     def translate_words_with_frequency(self):
         print('Translation in progress...\nPlease wait, process can take up to 5min')
-        for original, translated in zip(self._words_list, self.construct_request(with_frequency=True)):
+        for original, translated in zip(self._words_list, self._construct_request(with_frequency=True)):
             # some words or numbers can't be translated
             # that's why script checks if list with translations has length greater than 0
             if len(translated[0]['translations']) > 0:
-                self.translated_words[original[0]] = (translated[0]['translations'][0]['displayTarget'].lower(),
-                                                      original[1])
+                self._translated_words[original[0]] = (translated[0]['translations'][0]['displayTarget'].lower(),
+                                                       original[1])
         print('\nAll words translated!')
-        return self.translated_words
+        return self._translated_words
