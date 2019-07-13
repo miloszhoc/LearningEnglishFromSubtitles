@@ -89,3 +89,6 @@ class TestTranslateMicrosoft(unittest.TestCase):
                                                       src_lang='en',
                                                       dest_lang='de')
         self.assertEqual(tr.dest_lang, 'de')
+
+    def test_show_all_languages(self):
+        self.assertGreater(len(words_translator.TranslateWordsMicrosoft.show_all_languages()), 0)
