@@ -2,11 +2,7 @@ import unittest
 from utils import words_translator
 
 api_key = ''
-words_list = ['mr', 'white', 'hello', 'mr', 'white', 'the', "car's",
-              'been', 'dealt', 'with', 'sir', 'we', "who's", 'we',
-              'and', "i'll", 'handle', 'it', 'oh', 'no', 'no', 'no',
-              'oh', 'god', 'no', 'no', 'than', 'we', 'could', 'spend',
-              'in', 'lifetimes']
+words_list = ['mr', 'white', 'hello', 'mr', 'white', 'the', "car's"]
 
 
 class TestTranslateMicrosoft(unittest.TestCase):
@@ -92,3 +88,23 @@ class TestTranslateMicrosoft(unittest.TestCase):
 
     def test_show_all_languages(self):
         self.assertGreater(len(words_translator.TranslateWordsMicrosoft.show_all_languages()), 0)
+
+    def test_translate_words(self):
+        tr = words_translator.TranslateWordsMicrosoft(words_list=words_list,
+                                                      api_key=api_key,
+                                                      src_lang='en',
+                                                      dest_lang='pl')
+        self.assertGreater(len(tr.translate_words().values()), 0)
+
+    def test_translate_words_with_frequency(self):
+        tr = words_translator.TranslateWordsMicrosoft(words_list=words_list,
+                                                      api_key=api_key,
+                                                      src_lang='en',
+                                                      dest_lang='pl')
+        tr.translate_words_with_frequency()
+
+        self.assertGreater(len(tr._translated_words), 0)
+
+
+if __name__ == '__main__':
+    unittest.main()
