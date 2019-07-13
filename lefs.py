@@ -11,7 +11,7 @@ def create_file(filename, content):
 
 
 def main(args):
-    api_key = ''
+    api_key = '9dcd4058b8ee4bd88b9838bda9a6f890'
     if len(args) == 3:
         if args[1] == '-words':
             parser = srt_parser.SrtParser(args[2])
@@ -106,6 +106,8 @@ def main(args):
 
 if __name__ == '__main__':
     args = sys.argv
+    # args = ['lefs.py', r'tests\test_utils\part_to_test.srt']
+    # args = ['lefs.py', r'tests\test_utils\iZombie.S05E05.srt']
     if len(args) < 2:
         print('\n\t!!! -words and -wordsFreq commands supports translations only from or to English !!!\n')
         print('Usage:\n \'lefs [command] <arg>\'')
