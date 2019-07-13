@@ -4,21 +4,18 @@ import requests
 
 
 # uses microsoft translator api
-class TranslateMicrosoft:
+class TranslateWordsMicrosoft:
     def __init__(self, words_list, api_key, src_lang='en', dest_lang='pl'):
         # dictionary contains Language: code
         # keys contains languages in readable form eg. 'English', 'Polish', 'German'
         # values contains languages codes eg. 'en', 'fr', 'pl'
-        languages = TranslateMicrosoft.show_all_languages()
+        languages = TranslateWordsMicrosoft.show_all_languages()
 
-        # list of language codes used for final check
-        languages_codes = list(languages.values())
-
-        # code checks if language given by user is in language codes
+        # code checks if language given by user is in list with supported languages
         # if it is src_lang is set to value given by user
         # else it checks if user typed for example 'English'
         # if both cases are false variable is set to ''
-        if src_lang in languages_codes:
+        if src_lang in languages.values():
             self.src_lang = src_lang
         else:
             for readable, code in languages.items():
@@ -28,19 +25,30 @@ class TranslateMicrosoft:
             else:
                 self.src_lang = ''
 
-        if dest_lang in languages_codes:
-            self.dest_lang = dest_lang
-        else:
-            for readable, code in languages.items():
-                if dest_lang.capitalize() in readable:
-                    self.dest_lang = code
-                    break
+        # The only possibility according to Translator API documentation
+        # is to translate words from or to English.
+        # If source language is set to English program should ask about
+        # destination language.
+        # If source is set to different language than English program should
+        # automatically set destination language to English
+        if self.src_lang == 'en':
+            if dest_lang in languages.values():
+                self.dest_lang = dest_lang
             else:
-                self.dest_lang = ''
+                for readable, code in languages.items():
+                    if dest_lang.capitalize() in readable:
+                        self.dest_lang = code
+                        break
+                else:
+                    self.dest_lang = ''
+        else:
+            print("Setting destination language to English...")
+            self.dest_lang = 'en'
 
         # 'final check' checks if language is supported by Translator
-        if self.src_lang in languages_codes and self.dest_lang in languages_codes:
-            pass
+        if (self.src_lang in languages.values() and self.dest_lang in languages.values()) \
+                and (self.src_lang == 'en' or self.dest_lang == 'en'):
+            print('Translation from: ' + self.src_lang + ' to: ' + self.dest_lang)
         else:
             raise ValueError
 
@@ -86,7 +94,6 @@ class TranslateMicrosoft:
                     yield req.json()
                 else:
                     return False
-
         else:
             for word in self._words_list:
                 # body contains text to translate
@@ -107,6 +114,7 @@ class TranslateMicrosoft:
             if len(i[0]['translations']) > 0:
                 self.translated_words[i[0]['displaySource'].lower()] = i[0]['translations'][0]['displayTarget'].lower()
         print('\nAll words translated!')
+        return self.translated_words
 
     def translate_words_with_frequency(self):
         print('Translation in progress...\nPlease wait, process can take up to 5min')
