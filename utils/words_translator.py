@@ -103,7 +103,10 @@ class TranslateWordsMicrosoft:
                 req = requests.post(constructed_url,
                                     headers=headers,
                                     json=body)
-                yield req.json()
+                if req.status_code == 200:
+                    yield req.json()
+                else:
+                    return False
 
     def translate_words(self):
         print('Translation in progress...\nPlease wait, process can take up to 5min')
