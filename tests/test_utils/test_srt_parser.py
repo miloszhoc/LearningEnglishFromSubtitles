@@ -2,7 +2,7 @@ import unittest
 from utils import srt_parser
 
 # file contains some possible scenarios
-path_to_file = r'tests\test_utils\part_to_test.srt'
+path_to_file = r'tests\test_utils\subtitles\part_to_test.srt'
 
 
 class TestSrtParser(unittest.TestCase):
