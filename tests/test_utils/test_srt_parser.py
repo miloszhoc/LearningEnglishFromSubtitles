@@ -94,6 +94,21 @@ class TestSrtParser(unittest.TestCase):
         words = parser.words_with_frequency(min_len=3, min_occurs=2, descending=False)
         self.assertListEqual(words, [('white', '2')])
 
+    def test_part_subtitles_when_num_in_srt_file(self):
+        parser = srt_parser.SrtParser(file=path_to_file)
+        text = parser.part_subtitles('296')
+        self.assertListEqual(text, ['...than we could spend', 'in 10 lifetimes.'])
+
+    def test_part_subtitles_when_num_not_in_srt_file(self):
+        parser = srt_parser.SrtParser(file=path_to_file)
+        text = parser.part_subtitles('58')
+        self.assertFalse(text)
+
+    def test_part_subtitles_when_num_is_not_number(self):
+        parser = srt_parser.SrtParser(file=path_to_file)
+        text = parser.part_subtitles('x')
+        self.assertFalse(text)
+
 
 if __name__ == '__main__':
     unittest.main()
