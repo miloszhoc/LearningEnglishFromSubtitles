@@ -2,6 +2,8 @@ import re
 
 
 class SrtParser:
+    # To learn more about .srt files visit: https://en.wikipedia.org/wiki/SubRip
+
     def __init__(self, file):
         self._file = file
         self.words_frequency = []
@@ -9,7 +11,7 @@ class SrtParser:
     # generator which reads srt file line by line
     def read_srt_file(self):
         try:
-            with open(self._file, 'r') as f:
+            with open(self._file, 'r', encoding='utf-8') as f:
                 for line in f:
                     yield line
         except FileNotFoundError:
@@ -54,9 +56,6 @@ class SrtParser:
             print('Minimal word frequency can\'t  be less or equal 0')
             return False
 
-    def entire_subtitles(self):
-        pass
-
     # returns only text from specific part of subtitles ready to translate
     # todo: add option to search by time
     def part_subtitles(self, num):
@@ -78,3 +77,30 @@ class SrtParser:
                         return False
                     else:
                         return text
+
+    # Method reads file line by line until EOF is reached.
+    # Checks each line, if line contains any text it will be translated to
+    # given language and saved to file.
+    # If it doesn't contains any text line will be saved to file.
+    # todo: split translated line again into multiple lines
+    def entire_subtitles(self, func):
+        file_line = self.read_srt_file()
+        text = []
+        try:
+            line = next(file_line)  # reads first line in file
+            while True:  # runs until EOF
+                while line != '\n':  # reads one group in file (until \n occurs)
+                    if re.search('[a-zA-Z]', line):
+                        text.append(line.rstrip('\n'))
+                    else:
+                        yield line
+                    line = next(file_line)  # updating lines
+
+                translated_line = func(text)
+                yield translated_line + '\n'  # write translated line to file
+                yield '\n'  # empty line between one group and another
+                text = []
+                line = next(file_line)  # reads line in next group
+        except StopIteration:
+            translated_line = func(text)
+            yield translated_line
