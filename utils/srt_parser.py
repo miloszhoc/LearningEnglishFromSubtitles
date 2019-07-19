@@ -95,9 +95,9 @@ class SrtParser:
                     else:
                         yield line
                     line = next(file_line)  # updating lines
-
-                translated_line = func(text)
-                yield translated_line + '\n'  # write translated line to file
+                if len(text) > 0:
+                    translated_line = func(text)
+                    yield translated_line + '\n'  # write translated line to file
                 yield '\n'  # empty line between one group and another
                 text = []
                 line = next(file_line)  # reads line in next group
