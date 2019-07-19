@@ -1,4 +1,3 @@
-import re
 import requests
 import uuid
 
@@ -23,9 +22,9 @@ class SubtitlesTranslatorMicrosoft:
     #     return r.json()[0]['language']
 
     # todo: allow other languages as destination language
-    # todo: make function more flexible
+    # todo: make function faster
     def _construct_request(self, content):
-        text = r""""{}""".format(content)
+        text = r"""{}""".format(content)
 
         url = r'https://api.cognitive.microsofttranslator.com/translate?'
         query_params = 'api-version=3.0&' + 'to={}&'.format('pl') + 'textType=plain'
@@ -45,11 +44,6 @@ class SubtitlesTranslatorMicrosoft:
         else:
             return False
 
-    # Saves translated lines to .srt file
-    # and decides which line should be translated or omitted.
-    def translate_lines(self):
-        pass
-
     # returns translated part of subtitles
-    def translate_part(self, content):
+    def translate(self, content):
         return self._construct_request(' '.join(content))
