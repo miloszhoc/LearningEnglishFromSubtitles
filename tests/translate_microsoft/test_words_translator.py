@@ -1,5 +1,5 @@
 import unittest
-from utils import words_translator
+from translate_microsoft import words_translator
 
 api_key = '9dcd4058b8ee4bd88b9838bda9a6f890'
 words_list = ['mr', 'white', 'hello', 'mr', 'white', 'the', "car's"]
