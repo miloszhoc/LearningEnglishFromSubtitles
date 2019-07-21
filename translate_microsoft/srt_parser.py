@@ -6,7 +6,6 @@ class SrtParser:
 
     def __init__(self, file):
         self._file = file
-        self.words_frequency = []
 
     # generator which reads srt file line by line
     def read_srt_file(self):
@@ -39,6 +38,7 @@ class SrtParser:
     def words_with_frequency(self, descending=True, min_len=1, min_occurs=1):
         all_words = self.get_words_from_file()
         temp = set()
+        words_frequency = []
 
         # counts repetitions for every word
         # deletes repetitions
@@ -49,8 +49,8 @@ class SrtParser:
             # list contains tuples - (word, how many times it occurs)
             for word in sorted(temp, reverse=descending):
                 if len(word[1]) >= min_len and word[0] >= min_occurs:
-                    self.words_frequency.append((word[1], str(word[0])))
-            return self.words_frequency
+                    words_frequency.append((word[1], str(word[0])))
+            return words_frequency
         else:
             print('Minimal word length can\'t be less or equal 0')
             print('Minimal word frequency can\'t  be less or equal 0')
