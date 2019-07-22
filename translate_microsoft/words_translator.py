@@ -6,52 +6,36 @@ from translate_microsoft import language_checker
 
 # uses microsoft translator api
 class TranslateWordsMicrosoft:
-    def __init__(self, words_list, api_key, src_lang='en', dest_lang='pl'):
+    def __init__(self, words_list, api_key, src_lang, dest_lang):
         # dictionary contains Language: code
         # keys contains languages in readable form eg. 'English', 'Polish', 'German'
         # values contains languages codes eg. 'en', 'fr', 'pl'
-        languages = language_checker.CheckLanguage.show_all_languages_dictionary()
+        check_lang = language_checker.CheckLanguage()
+        languages = check_lang.show_all_languages_dictionary()
 
-        # code checks if language given by user is in list with supported languages
-        # if it is src_lang is set to value given by user
-        # else it checks if user typed for example 'English'
-        # if both cases are false variable is set to ''
-        if src_lang in languages.values():
-            self.src_lang = src_lang
-        else:
-            for readable, code in languages.items():
-                if src_lang.capitalize() in readable:
-                    self.src_lang = code
-                    break
-            else:
-                self.src_lang = ''
+        # Code checks if language given by user is in list with supported languages
+        # if it is, src_lang will be set to value given by user
+        # else it checks if user typed for example 'English',
+        # if both cases are false exception will be raised.
 
         # The only possibility according to Translator API documentation
         # is to translate words from or to English.
         # If source language is set to English program should ask about
         # destination language.
-        # If source is set to different language than English program should
+        # If source is set to different language than English program will
         # automatically set destination language to English
-        if self.src_lang == 'en':
+        if src_lang == 'en':
+            self.src_lang = src_lang
             if dest_lang in languages.values():
                 self.dest_lang = dest_lang
             else:
-                for readable, code in languages.items():
-                    if dest_lang.capitalize() in readable:
-                        self.dest_lang = code
-                        break
-                else:
-                    self.dest_lang = ''
+                self.dest_lang = check_lang.check_lang_dictionary(dest_lang)
         else:
-            print("Setting destination language to English...")
             self.dest_lang = 'en'
-
-        # 'final check' checks if language is supported by Translator
-        if (self.src_lang in languages.values() and self.dest_lang in languages.values()) \
-                and (self.src_lang == 'en' or self.dest_lang == 'en'):
-            print('Translation from: ' + self.src_lang + ' to: ' + self.dest_lang)
-        else:
-            raise ValueError
+            if src_lang in languages.values():
+                self.src_lang = src_lang
+            else:
+                self.src_lang = check_lang.check_lang_dictionary(src_lang)
 
         self._words_list = words_list
         self._subscriptionKey = api_key
