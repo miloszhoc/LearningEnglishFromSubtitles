@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import re
 
 
@@ -8,9 +9,16 @@ class SrtParser:
         self._file = file
 
     # generator which reads srt file line by line
+    def get_encoding(self, file):
+        f = open(file)
+        f_encoding = f.encoding
+        f.close()
+        return f_encoding
+
     def read_srt_file(self):
         try:
-            with open(self._file, 'r', encoding='utf-8') as f:
+            encoding = self.get_encoding(self._file)
+            with open(self._file, 'r', encoding=encoding) as f:
                 for line in f:
                     yield line
         except FileNotFoundError:
@@ -59,6 +67,7 @@ class SrtParser:
     # returns only text from specific part of subtitles ready to translate
     # todo: add option to search by time
     def part_subtitles(self, num):
+        num = str(num)
         lines = self.read_srt_file()
         text = []
         for line in lines:
