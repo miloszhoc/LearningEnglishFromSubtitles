@@ -80,6 +80,8 @@ class SrtParser:
                         return False
                     else:
                         return text
+        else:
+            return False
 
     # Method reads file line by line until EOF is reached.
     # Checks each line, if line contains any text it will be translated to
