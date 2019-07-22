@@ -8,17 +8,11 @@ class SrtParser:
     def __init__(self, file):
         self._file = file
 
+    # todo: check file encoding before reading it
     # generator which reads srt file line by line
-    def get_encoding(self, file):
-        f = open(file)
-        f_encoding = f.encoding
-        f.close()
-        return f_encoding
-
     def read_srt_file(self):
         try:
-            encoding = self.get_encoding(self._file)
-            with open(self._file, 'r', encoding=encoding) as f:
+            with open(self._file, 'r', encoding='utf-8') as f:
                 for line in f:
                     yield line
         except FileNotFoundError:
