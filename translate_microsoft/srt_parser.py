@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import re
 
+import chardet
+
 
 class SrtParser:
     # To learn more about .srt files visit: https://en.wikipedia.org/wiki/SubRip
@@ -8,11 +10,15 @@ class SrtParser:
     def __init__(self, file):
         self._file = file
 
-    # todo: check file encoding before reading it
+    def detect_encoding(self):
+        with open(self._file, 'rb') as f:
+            return chardet.detect(f.read())['encoding']
+
     # generator which reads srt file line by line
     def read_srt_file(self):
         try:
-            with open(self._file, 'r', encoding='utf-8') as f:
+            encoding = self.detect_encoding()
+            with open(self._file, 'r', encoding=encoding) as f:
                 for line in f:
                     yield line
         except FileNotFoundError:
