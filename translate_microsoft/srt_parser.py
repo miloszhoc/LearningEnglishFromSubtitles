@@ -23,7 +23,7 @@ class SrtParser:
                     yield line
         except FileNotFoundError:
             print('File does not exist.\nCheck your path or file name.')
-            return False
+            exit()
 
     # returns all words form file (with repetitions)
     def get_words_from_file(self):
@@ -61,7 +61,7 @@ class SrtParser:
         else:
             print('Minimal word length can\'t be less or equal 0')
             print('Minimal word frequency can\'t  be less or equal 0')
-            return False
+            exit()
 
     # returns only text from specific part of subtitles ready to translate
     # todo: add option to search by time
