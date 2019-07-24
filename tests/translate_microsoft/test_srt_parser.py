@@ -9,11 +9,12 @@ class TestSrtParser(unittest.TestCase):
 
     def test_read_srt_file_when_file_exists(self):
         parser = srt_parser.SrtParser(file=path_to_file)
-        self.assertTrue(parser.read_srt_file())
+        generator = (x for x in range(2))
+        self.assertEqual(type(parser.read_srt_file()), type(generator))
 
     def test_read_srt_file_when_file_doesnt_exists(self):
         parser = srt_parser.SrtParser(file='part.srt')
-        self.assertFalse(parser.get_words_from_file())
+        self.assertRaises(SystemExit, parser.get_words_from_file)
 
     def test_get_words_from_file(self):
         parser = srt_parser.SrtParser(file=path_to_file)
@@ -39,8 +40,8 @@ class TestSrtParser(unittest.TestCase):
 
     def test_words_with_frequency_when_min_len_is_0_desc(self):
         parser = srt_parser.SrtParser(file=path_to_file)
-        words = parser.words_with_frequency(min_len=0)
-        self.assertFalse(words)
+        words = parser.words_with_frequency
+        self.assertRaises(SystemExit, words, min_len=0)
 
     def test_words_with_frequency_when_min_len_is_default_desc(self):
         parser = srt_parser.SrtParser(file=path_to_file)
@@ -65,8 +66,8 @@ class TestSrtParser(unittest.TestCase):
 
     def test_words_with_frequency_when_min_occurs_is_0_desc(self):
         parser = srt_parser.SrtParser(file=path_to_file)
-        words = parser.words_with_frequency(min_occurs=0)
-        self.assertFalse(words)
+        words = parser.words_with_frequency
+        self.assertRaises(SystemExit, words, min_occurs=0)
 
     def test_words_with_frequency_when_min_occurs_is_default_desc(self):
         parser = srt_parser.SrtParser(file=path_to_file)
