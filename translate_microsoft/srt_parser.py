@@ -73,7 +73,7 @@ class SrtParser:
             if re.match('{}$'.format(num), line):  # if line contains only subtitles number
                 try:
                     while line != '\n':  # reads next line until empty line
-                        if re.search('[a-zA-Z]', line):
+                        if re.search(r'[^\W\d_]', line, re.U):
                             text.append(line.rstrip('\n'))
                         readnext = next(lines)
                         line = readnext  # updating line
