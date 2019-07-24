@@ -170,8 +170,8 @@ def main(args):
 
 if __name__ == '__main__':
     args = sys.argv
-    args = ['lefs.py', '-part', r"tests\translate_microsoft\subtitles\part_to_test.srt"]
-    args = ['lefs.py', '-words', r'tests\translate_microsoft\subtitles\iZombie.S05E05.srt']
+    # args = ['lefs.py', '-part', r"tests\translate_microsoft\subtitles\part_to_test.srt"]
+    # args = ['lefs.py', '-words', r'tests\translate_microsoft\subtitles\iZombie.S05E05.srt']
     # args = ['lefs.py', '-all', r'tests\translate_microsoft\subtitles\legion.s03e05.1080p.web.h264-memento.srt']
     if len(args) < 2:
         print('\n\t!!! -words and -wordsFreq commands supports translations only from or to English !!!\n')
