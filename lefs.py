@@ -19,8 +19,6 @@ def main(args):
             try:
                 print('This command supports translation only from or to English!')
                 print('Either source language or destination language has to be English')
-                print('If source language is different, '
-                      'destination language will be automatically set to English\n')
 
                 print("Press '1' to translate from English")
                 print("Press '2' to translate to English")
@@ -56,6 +54,9 @@ def main(args):
 
         elif args[1] == '-wordsFreq':
             parser = srt_parser.SrtParser(args[2])
+            print('This command supports translation only from or to English!')
+            print('Either source language or destination language has to be English')
+
             print("Press '1' to translate from English")
             print("Press '2' to translate to English")
             option = input('>')
@@ -148,7 +149,7 @@ def main(args):
 
         elif args[1] == '-double':
             pass
-        
+
         else:
             print('unknown command')
 
@@ -168,9 +169,10 @@ def main(args):
 
 
 if __name__ == '__main__':
-    # args = sys.argv
+    args = sys.argv
     args = ['lefs.py', '-part', r"tests\translate_microsoft\subtitles\part_to_test.srt"]
-    # args = ['lefs.py', r'tests\test_utils\iZombie.S05E05.srt']
+    args = ['lefs.py', '-words', r'tests\translate_microsoft\subtitles\iZombie.S05E05.srt']
+    # args = ['lefs.py', '-all', r'tests\translate_microsoft\subtitles\legion.s03e05.1080p.web.h264-memento.srt']
     if len(args) < 2:
         print('\n\t!!! -words and -wordsFreq commands supports translations only from or to English !!!\n')
         print('Usage:\n \'lefs [command] <arg>\'')
