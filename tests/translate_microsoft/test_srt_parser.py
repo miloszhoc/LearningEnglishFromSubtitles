@@ -1,5 +1,6 @@
 import unittest
 from translate_microsoft import srt_parser
+from translate_microsoft import exceptions
 
 # file contains some possible scenarios
 path_to_file = r'tests\translate_microsoft\subtitles\part_to_test.srt'
@@ -97,28 +98,28 @@ class TestSrtParser(unittest.TestCase):
 
     def test_part_subtitles_when_num_is_passed(self):
         parser = srt_parser.SrtParser(file=path_to_file)
-        text = parser.part_subtitles(group_num='296')
-        self.assertListEqual(text, ['...than we could spend', 'in 10 lifetimes.'])
+        part = parser.part_subtitles(group_num='296')
+        self.assertListEqual(part, ['...than we could spend', 'in 10 lifetimes.'])
 
     def test_part_subtitles_when_num_not_in_srt_file(self):
         parser = srt_parser.SrtParser(file=path_to_file)
-        text = parser.part_subtitles(group_num='58')
-        self.assertFalse(text)
+        part = parser.part_subtitles
+        self.assertRaises(exceptions.PartDoesNotExists, part, group_num='58')
 
     def test_part_subtitles_when_num_is_not_number(self):
         parser = srt_parser.SrtParser(file=path_to_file)
-        text = parser.part_subtitles(group_num='x')
-        self.assertFalse(text)
+        part = parser.part_subtitles
+        self.assertRaises(exceptions.PartDoesNotExists, part, group_num='x')
 
     def test_part_subtitles_when_time_is_passed(self):
         parser = srt_parser.SrtParser(file=path_to_file)
-        text = parser.part_subtitles(time='00:01:17')
-        self.assertListEqual(text, ["Mr. White,", "the car's been dealt with, sir."])
+        part = parser.part_subtitles(time='00:01:17')
+        self.assertListEqual(part, ["Mr. White,", "the car's been dealt with, sir."])
 
     def test_part_subtitles_when_not_existing_time_is_passed(self):
         parser = srt_parser.SrtParser(file=path_to_file)
-        text = parser.part_subtitles(time='00:11:17')
-        self.assertFalse(text)
+        part = parser.part_subtitles
+        self.assertRaises(exceptions.PartDoesNotExists, part, time='00:11:17')
 
     def test_part_subtitles_when_wrong_time_format_is_passed(self):
         parser = srt_parser.SrtParser(file=path_to_file)
