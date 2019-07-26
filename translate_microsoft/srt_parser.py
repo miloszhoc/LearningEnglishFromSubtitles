@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import datetime
 import re
 
 import chardet
@@ -63,30 +64,45 @@ class SrtParser:
             print('Minimal word frequency can\'t  be less or equal 0')
             exit()
 
-    # returns only text from specific part of subtitles ready to translate
-    # todo: add option to search by time
-    def part_subtitles(self, num):
-        num = str(num)
+    # returns only text from specific part of subtitles
+    def part_subtitles(self, group_num=None, time=None):
         lines = self.read_srt_file()
         text = []
-        for line in lines:
-            if re.match('{}$'.format(num), line):  # if line contains only subtitles number
-                try:
-                    while line != '\n':  # reads next line until empty line
-                        if re.search(r'[^\W\d_]', line, re.U):
-                            text.append(line.rstrip('\n'))
-                        readnext = next(lines)
-                        line = readnext  # updating line
-                except StopIteration:
-                    pass
-                finally:
-                    if len(text) == 0:
-                        print('Error, part not found')
-                        return False
-                    else:
+        # if time is nt passed to function checks by group number
+        if not time:
+            group_num = str(group_num)
+            for line in lines:
+                if re.match('{}$'.format(group_num), line):  # if line contains only subtitles number
+                    try:
+                        while line != '\n':  # reads next line until empty line
+                            if re.search(r'[^\W\d_]', line, re.U):
+                                text.append(line.rstrip('\n'))
+                            line = next(lines)  # updating line
+                    except StopIteration:
+                        pass
+                    finally:
                         return text
+            else:
+                return False  # todo: raise exception (part not found)
         else:
-            return False
+            time = datetime.datetime.strptime(time, '%H:%M:%S').time()
+            for line in lines:
+                times = re.findall('\d{2}:\d{2}:\d{2}', line)
+                if times:  # checks if times is not empty list
+                    time_begin = datetime.datetime.strptime(times[0], '%H:%M:%S').time()
+                    time_end = datetime.datetime.strptime(times[1], '%H:%M:%S').time()
+                    if time_begin <= time <= time_end:
+                        try:
+                            while line != '\n':
+                                line = next(lines)
+                                if line != '\n':
+                                    text.append(line.rstrip('\n'))
+                        except StopIteration:
+                            pass
+                        finally:
+                            return text
+            else:
+                return False  # todo raise exception (part does not exists)
 
     # Method reads file line by line until EOF is reached.
     # Checks each line, if line contains any text it will be translated to
