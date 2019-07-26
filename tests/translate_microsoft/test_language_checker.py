@@ -1,6 +1,7 @@
 import unittest
 
 from translate_microsoft import language_checker
+from translate_microsoft import exceptions
 
 
 class TestLanguageChecker(unittest.TestCase):
@@ -23,7 +24,7 @@ class TestLanguageChecker(unittest.TestCase):
 
     def test_check_lang_dictionary_when_lang_does_not_exists(self):
         lc = language_checker.CheckLanguage()
-        self.assertRaises(ValueError, lc.check_lang_dictionary, 'xda')
+        self.assertRaises(exceptions.LangDoesNotExists, lc.check_lang_dictionary, 'xda')
 
     def test_show_all_languages_translation(self):
         lc = language_checker.CheckLanguage()
@@ -35,4 +36,4 @@ class TestLanguageChecker(unittest.TestCase):
 
     def test_check_lang_translation_when_lang_does_not_exists(self):
         lc = language_checker.CheckLanguage()
-        self.assertRaises(ValueError, lc.check_lang_translation, 'qwerty')
+        self.assertRaises(exceptions.LangDoesNotExists, lc.check_lang_translation, 'qwerty')
