@@ -1,13 +1,13 @@
 import unittest
 from translate_microsoft import words_translator
-
+from translate_microsoft import exceptions
 api_key = '9dcd4058b8ee4bd88b9838bda9a6f890'
 words_list = ['mr', 'white', 'hello', 'mr', 'white', 'the', "car's"]
 
 
 class TestTranslateMicrosoft(unittest.TestCase):
     def test_init_when_src_lang_does_not_exists(self):
-        self.assertRaises(ValueError,
+        self.assertRaises(exceptions.LangDoesNotExists,
                           words_translator.TranslateWordsMicrosoft,
                           words_list=words_list,
                           api_key=api_key,
@@ -16,7 +16,7 @@ class TestTranslateMicrosoft(unittest.TestCase):
                           )
 
     def test_init_when_dest_lang_does_not_exists(self):
-        self.assertRaises(ValueError,
+        self.assertRaises(exceptions.LangDoesNotExists,
                           words_translator.TranslateWordsMicrosoft,
                           words_list=words_list,
                           api_key=api_key,
