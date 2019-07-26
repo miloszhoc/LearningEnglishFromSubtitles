@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import requests
+from translate_microsoft import exceptions
 
 
 class CheckLanguage:
@@ -30,7 +31,7 @@ class CheckLanguage:
                 out_code = code
                 break
         else:
-            raise ValueError
+            raise exceptions.LangDoesNotExists
         return out_code
 
     def check_lang_translation(self, full_lang):
@@ -39,5 +40,5 @@ class CheckLanguage:
                 out_code = code
                 break
         else:
-            raise ValueError
+            raise exceptions.LangDoesNotExists
         return out_code

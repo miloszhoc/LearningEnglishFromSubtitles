@@ -3,6 +3,7 @@ import datetime
 import re
 
 import chardet
+from translate_microsoft import exceptions
 
 
 class SrtParser:
@@ -83,7 +84,7 @@ class SrtParser:
                     finally:
                         return text
             else:
-                return False  # todo: raise exception (part not found)
+                raise exceptions.PartDoesNotExists
         else:
             time = datetime.datetime.strptime(time, '%H:%M:%S').time()
             for line in lines:
@@ -102,7 +103,7 @@ class SrtParser:
                         finally:
                             return text
             else:
-                return False  # todo raise exception (part does not exists)
+                raise exceptions.PartDoesNotExists
 
     # Method reads file line by line until EOF is reached.
     # Checks each line, if line contains any text it will be translated to
