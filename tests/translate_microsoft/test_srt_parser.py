@@ -8,11 +8,6 @@ path_to_file = r'tests\translate_microsoft\subtitles\part_to_test.srt'
 
 class TestSrtParser(unittest.TestCase):
 
-    def test_read_srt_file_when_file_exists(self):
-        parser = srt_parser.SrtParser(file=path_to_file)
-        generator = (x for x in range(2))
-        self.assertEqual(type(parser.read_srt_file()), type(generator))
-
     def test_read_srt_file_when_file_doesnt_exists(self):
         parser = srt_parser.SrtParser(file='part.srt')
         self.assertRaises(SystemExit, parser.get_words_from_file)
