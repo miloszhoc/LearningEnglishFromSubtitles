@@ -1,11 +1,18 @@
 import requests
 import uuid
+from translate_microsoft import language_checker
 
 
 # translate subtitles using Microsoft Translator
 class SubtitlesTranslatorMicrosoft:
-    def __init__(self, api_key):
+    def __init__(self, api_key, dest_lang):
         self._subscriptionKey = api_key
+        check_lang = language_checker.CheckLanguage()
+        languages = check_lang.show_all_languages_translation()
+        if dest_lang in languages.values():
+            self.dest_lang = dest_lang
+        else:
+            self.dest_lang = check_lang.check_lang_translation(dest_lang)
 
     # def detect_language(self, line):
     #     text = r"""{}""".format(line)
@@ -21,13 +28,11 @@ class SubtitlesTranslatorMicrosoft:
     #                       json=body)
     #     return r.json()[0]['language']
 
-    # todo: allow other languages as destination language
-    # todo: make function faster
     def _construct_request(self, content):
         text = r"""{}""".format(content)
 
         url = r'https://api.cognitive.microsofttranslator.com/translate?'
-        query_params = 'api-version=3.0&' + 'to={}&'.format('pl') + 'textType=plain'
+        query_params = 'api-version=3.0&' + 'to={}&'.format(self.dest_lang) + 'textType=plain'
         full_url = url + query_params
 
         headers = {'Ocp-Apim-Subscription-Key': self._subscriptionKey,
@@ -46,4 +51,10 @@ class SubtitlesTranslatorMicrosoft:
 
     # returns translated part of subtitles
     def translate(self, content):
-        return self._construct_request(' '.join(content))
+        try:
+            assert isinstance(content, list)
+        except AssertionError:
+            print("Error while translation")
+            exit()
+        else:
+            return self._construct_request(' '.join(content))
