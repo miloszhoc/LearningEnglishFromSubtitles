@@ -19,7 +19,7 @@ def main(args):
     try:
         if len(args) == 3:
             if args[2].endswith('.srt'):
-                if args[1] == '-words':
+                if args[1] == 'words':
                     parser = srt_parser.SrtParser(args[2])
                     try:
                         print('This command supports translation only from or to English!')
@@ -57,7 +57,7 @@ def main(args):
                             create_file(f_name, content)
                         print('All translated!')
 
-                elif args[1] == '-wordsFreq':
+                elif args[1] == 'wordsFreq':
                     parser = srt_parser.SrtParser(args[2])
                     print('This command supports translation only from or to English!')
                     print('Either source language or destination language has to be English')
@@ -125,7 +125,7 @@ def main(args):
                             create_file(f_name, content)
                         print('All translated!')
 
-                elif args[1] == '-all':
+                elif args[1] == 'all':
                     parser = srt_parser.SrtParser(args[2])
                     s_t = None
                     dest_lang = input("What is destination language\n>")
@@ -140,7 +140,7 @@ def main(args):
                             f.write(line)
                     print('All translated')
 
-                elif args[1] == '-part':
+                elif args[1] == 'part':
                     parser = srt_parser.SrtParser(args[2])
                     print('Type \'num\' if you want to translate part using number group')
                     print('Type \'time\' if you want to translate part using time')
@@ -190,7 +190,7 @@ def main(args):
                     translated = trans.translate(part)
                     print(translated)
 
-                elif args[1] == '-double':
+                elif args[1] == 'double':
                     print('Function not available')
 
                 else:
@@ -201,12 +201,12 @@ def main(args):
                 exit()
 
         if len(args) == 2:
-            if args[1] == '-langWords':
+            if args[1] == 'langWords':
                 langs = language_checker.CheckLanguage()
                 for k, v in langs.show_all_languages_dictionary().items():
                     print(k, '-', v)
 
-            elif args[1] == '-langTxt':
+            elif args[1] == 'langTxt':
                 langs = language_checker.CheckLanguage()
                 for k, v in langs.show_all_languages_translation().items():
                     print(k, '-', v)
@@ -219,26 +219,26 @@ def main(args):
 
 if __name__ == '__main__':
     args = sys.argv
-    # args = ['lefs.py', '-part', r"tests\translate_microsoft\subtitles\empty.srt"]
-    # args = ['lefs.py', '-part', r"tests\translate_microsoft\subtitles\part_to_test.srt"]
-    # args = ['lefs.py', '-words', r'tests\translate_microsoft\subtitles\legion.s03e05.1080p.web.h264-memento.srt']
-    # args = ['lefs.py', '-words', r'tests\translate_microsoft\subtitles\iZombdie.S05E05.srt']
-    # args = ['lefs.py', '-all', r'tests\translate_microsoft\subtitles\legion.s03e05.1080p.web.h264-memento.srt']
-    # args = ['lefs.py', '-words',
+    # args = ['lefs.py', 'part', r"tests\translate_microsoft\subtitles\empty.srt"]
+    # args = ['lefs.py', 'part', r"tests\translate_microsoft\subtitles\part_to_test.srt"]
+    # args = ['lefs.py', 'words', r'tests\translate_microsoft\subtitles\legion.s03e05.1080p.web.h264-memento.srt']
+    # args = ['lefs.py', 'words', r'tests\translate_microsoft\subtitles\iZombdie.S05E05.srt']
+    # args = ['lefs.py', 'all', r'tests\translate_microsoft\subtitles\legion.s03e05.1080p.web.h264-memento.srt']
+    # args = ['lefs.py', 'words',
     #         r'tests\translate_microsoft\subtitles\Legion - 02x04 - Chapter 12.AVS-SVA.English.C.orig.Addic7ed.com.hebrew.srt']
     if len(args) < 2:
-        print('\n\t!!! -words and -wordsFreq commands supports translations only from or to English !!!\n')
+        print('\n\t!!! words and wordsFreq commands supports translations only from or to English !!!\n')
         print('Usage:\n \'lefs [command] <arg>\'')
 
         print('\nCommands:')
-        print('-langWords\tshows all supported languages for words translation with codes (use this without arg)')
-        print('-langTxt\tshows all supported languages for subtitles translation with codes (use this without arg)')
+        print('langWords\tshows all supported languages for words translation with codes (use this without arg)')
+        print('langTxt\t\tshows all supported languages for subtitles translation with codes (use this without arg)')
         print()
-        print('-wordsFreq\tcreates file which contains words with translations and how many times each word occurs')
-        print('-words\t\tcreates file which contains words with translations')
-        print('-all\t\ttranslates whole subtitles')
-        print('-part\t\ttranslate specific part of subtitles')
-        print('-double\t\tgenerate a srt file which contains subtitles in both languages')
+        print('wordsFreq\tcreates file which contains words with translations and how many times each word occurs')
+        print('words\t\tcreates file which contains words with translations')
+        print('all\t\ttranslates whole subtitles')
+        print('part\t\ttranslate specific part of subtitles')
+        print('double\t\tgenerate a srt file which contains subtitles in both languages')
 
         print('\nargs:')
         print('<file name>\t .srt file (file with subtitles)')
