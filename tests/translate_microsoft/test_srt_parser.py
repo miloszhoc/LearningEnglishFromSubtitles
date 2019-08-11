@@ -34,11 +34,6 @@ class TestSrtParser(unittest.TestCase):
                                     'oh', 'god', 'no', 'no', 'than', 'we', 'could', 'spend',
                                     'in', 'lifetimes'})
 
-    def test_words_with_frequency_when_min_len_is_0_desc(self):
-        parser = srt_parser.SrtParser(file=path_to_file)
-        words = parser.words_with_frequency
-        self.assertRaises(SystemExit, words, min_len=0)
-
     def test_words_with_frequency_when_min_len_is_default_desc(self):
         parser = srt_parser.SrtParser(file=path_to_file)
         words = parser.words_with_frequency()
@@ -59,11 +54,6 @@ class TestSrtParser(unittest.TestCase):
                                           ("who's", '1'), ('and', '1'), ("i'll", '1'),
                                           ('handle', '1'), ('god', '1'), ('than', '1'),
                                           ('could', '1'), ('spend', '1'), ('lifetimes', '1')]))
-
-    def test_words_with_frequency_when_min_occurs_is_0_desc(self):
-        parser = srt_parser.SrtParser(file=path_to_file)
-        words = parser.words_with_frequency
-        self.assertRaises(SystemExit, words, min_occurs=0)
 
     def test_words_with_frequency_when_min_occurs_is_default_desc(self):
         parser = srt_parser.SrtParser(file=path_to_file)
