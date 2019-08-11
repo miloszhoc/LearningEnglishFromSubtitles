@@ -27,8 +27,8 @@ def main(args):
 
                         print("Press '1' to translate from English")
                         print("Press '2' to translate to English")
-                        option = input('>')
                         while True:
+                            option = input('>')
                             if option == '1':
                                 src = 'en'
                                 dest = input('what is the destination language? ')
@@ -64,8 +64,8 @@ def main(args):
 
                     print("Press '1' to translate from English")
                     print("Press '2' to translate to English")
-                    option = input('>')
                     while True:
+                        option = input('>')
                         if option == '1':
                             src = 'en'
                             dest = input('what is the destination language? ')
@@ -146,8 +146,8 @@ def main(args):
                     print('Type \'time\' if you want to translate part using time')
 
                     part = None
-                    option = input()
                     while True:
+                        option = input()
                         if option == 'num':
                             try:
                                 num = int(input('Pick the number of the part of subtitles\n>'))
