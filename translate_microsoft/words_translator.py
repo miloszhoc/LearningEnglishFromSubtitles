@@ -12,6 +12,7 @@ class TranslateWordsMicrosoft:
         # values contains languages codes eg. 'en', 'fr', 'pl'
         check_lang = language_checker.CheckLanguage()
         languages = check_lang.show_all_languages_dictionary()
+        # todo: move language checking to external class
 
         # Code checks if language given by user is in list with supported languages
         # if it is, src_lang will be set to value given by user

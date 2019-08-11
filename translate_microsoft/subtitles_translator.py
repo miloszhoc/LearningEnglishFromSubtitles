@@ -9,6 +9,7 @@ class SubtitlesTranslatorMicrosoft:
         self._subscriptionKey = api_key
         check_lang = language_checker.CheckLanguage()
         languages = check_lang.show_all_languages_translation()
+        # todo: move language checking to external class
         if dest_lang in languages.values():
             self.dest_lang = dest_lang
         else:
