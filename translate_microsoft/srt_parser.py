@@ -54,16 +54,11 @@ class SrtParser:
         for i in all_words:
             temp.add((all_words.count(i), i))
 
-        if min_len > 0 and min_occurs > 0:
             # list contains tuples - (word, how many times it occurs)
-            for word in sorted(temp, reverse=descending):
-                if len(word[1]) >= min_len and word[0] >= min_occurs:
-                    words_frequency.append((word[1], str(word[0])))
-            return words_frequency
-        else:
-            print('Minimal word length can\'t be less or equal 0')
-            print('Minimal word frequency can\'t  be less or equal 0')
-            exit()
+        for word in sorted(temp, reverse=descending):
+            if len(word[1]) >= min_len and word[0] >= min_occurs:
+                words_frequency.append((word[1], str(word[0])))
+        return words_frequency
 
     # returns only text from specific part of subtitles
     def part_subtitles(self, group_num=None, time=None):
