@@ -105,6 +105,8 @@ class SrtParser:
     # given language and saved to file.
     # If it doesn't contains any text line will be saved to file.
     # todo: split translated line again into multiple lines
+
+    # todo: entire_subtitles and double_subtitles are the same
     def entire_subtitles(self, func):
         file_line = self.read_srt_file()
         text = []
@@ -120,9 +122,31 @@ class SrtParser:
                 if len(text) > 0:
                     translated_line = func(text)
                     yield translated_line + '\n'  # write translated line to file
-                yield '\n'  # empty line between one group and another
+                yield '\n'  # empty line between groups
                 text = []
                 line = next(file_line)  # reads line in next group
         except StopIteration:
             translated_line = func(text)
             yield translated_line
+
+    def double_subtitles(self, func):
+        file_line = self.read_srt_file()
+        text = []
+        try:
+            line = next(file_line)  # reads first line in file
+            while True:  # runs until EOF
+                while line != '\n':  # reads one group in file (until \n occurs)
+                    if re.search('[a-zA-Z]', line):
+                        text.append(line.rstrip('\n'))
+                    else:
+                        yield line
+                    line = next(file_line)  # updating lines
+                if len(text) > 0:
+                    translated_line = func(text)
+                    yield ''.join(text) + '\n' + '\t-' + '\n' + translated_line + '\n'  # write translated line to file
+                yield '\n'  # empty line between groups
+                text = []
+                line = next(file_line)  # reads line in next group
+        except StopIteration:
+            translated_line = func(text)
+            yield ''.join(text) + '\n' + '\t-' + '\n' + translated_line
