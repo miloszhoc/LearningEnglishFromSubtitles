@@ -3,7 +3,7 @@ import datetime
 import re
 
 import chardet
-from translate_microsoft import exceptions
+from utils import exceptions
 
 
 class SrtParser:
