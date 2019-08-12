@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import requests
-from translate_microsoft import exceptions
+from utils import exceptions
 
 
 class CheckLanguage:

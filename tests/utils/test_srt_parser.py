@@ -1,9 +1,8 @@
 import unittest
-from translate_microsoft import srt_parser
-from translate_microsoft import exceptions
+from utils import exceptions, srt_parser
 
 # file contains some possible scenarios
-path_to_file = r'tests\translate_microsoft\subtitles\part_to_test.srt'
+path_to_file = r'tests/translate_microsoft/subtitles/part_to_test.srt'
 
 
 class TestSrtParser(unittest.TestCase):

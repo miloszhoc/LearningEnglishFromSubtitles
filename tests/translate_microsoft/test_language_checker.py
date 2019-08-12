@@ -1,7 +1,7 @@
 import unittest
 
 from translate_microsoft import language_checker
-from translate_microsoft import exceptions
+from utils import exceptions
 
 
 class TestLanguageChecker(unittest.TestCase):
