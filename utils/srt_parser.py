@@ -45,12 +45,15 @@ class SrtParser:
 
     # returns words with repetitions counter
     def words_with_frequency(self, descending=True, min_len=1, min_occurs=1):
+        if min_len <= 0:
+            raise exceptions.LenLessEqualZero
+        if min_occurs <= 0:
+            raise exceptions.OccursLessEqualZero
+
         all_words = self.get_words_from_file()
         temp = set()
         words_frequency = []
 
-        # counts repetitions for every word
-        # deletes repetitions
         for i in all_words:
             temp.add((all_words.count(i), i))
 
