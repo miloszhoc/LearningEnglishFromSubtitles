@@ -18,7 +18,10 @@ class TestSrtParser(unittest.TestCase):
                                      'been', 'dealt', 'with', 'sir', 'we', "who's", 'we',
                                      'and', "i'll", 'handle', 'it', 'oh', 'no', 'no', 'no',
                                      'oh', 'god', 'no', 'no', 'than', 'we', 'could', 'spend',
-                                     'in', 'lifetimes'])
+                                     'in', 'lifetimes', 'know', 'you', 'think', "i'm", 'sociopath',
+                                     'יש', 'לך', 'את', 'זה', 'הנה', 'היא', 'באה', 'ich', 'weiß',
+                                     'noch', 'nicht', 'genau', 'астральна', 'площина', 'нагадувала',
+                                     'магніт'])
 
     def test_words_without_repetitions(self):
         parser = srt_parser.SrtParser(file=path_to_file)
@@ -31,7 +34,10 @@ class TestSrtParser(unittest.TestCase):
                                     'been', 'dealt', 'with', 'sir', 'we', "who's", 'we',
                                     'and', "i'll", 'handle', 'it', 'oh', 'no', 'no', 'no',
                                     'oh', 'god', 'no', 'no', 'than', 'we', 'could', 'spend',
-                                    'in', 'lifetimes'})
+                                    'in', 'lifetimes', 'know', 'you', 'think', "i'm", 'sociopath',
+                                    'יש', 'לך', 'את', 'זה', 'הנה', 'היא', 'באה', 'ich', 'weiß',
+                                    'noch', 'nicht', 'genau', 'астральна', 'площина', 'нагадувала',
+                                    'магніт'})
 
     def test_words_with_frequency_when_min_len_is_0(self):
         parser = srt_parser.SrtParser(file=path_to_file)
@@ -52,7 +58,13 @@ class TestSrtParser(unittest.TestCase):
                                           ('dealt', '1'), ('with', '1'), ('sir', '1'), ("who's", '1'),
                                           ('and', '1'), ("i'll", '1'), ('handle', '1'), ('it', '1'),
                                           ('god', '1'), ('than', '1'), ('could', '1'),
-                                          ('spend', '1'), ('in', '1'), ('lifetimes', '1')]))
+                                          ('spend', '1'), ('in', '1'), ('lifetimes', '1'),
+                                          ('know', '1'), ('you', '1'), ('think', '1'), ("i'm", '1'),
+                                          ('sociopath', '1'), ('ich', '1'), ('weiß', '1'), ('באה', '1'),
+                                          ('היא', '1'), ('הנה', '1'), ('זה', '1'), ('את', '1'), ('לך', '1'),
+                                          ('יש', '1'), ('noch', '1'), ('nicht', '1'), ('genau', '1'),
+                                          ('астральна', '1'), ('площина', '1'), ('нагадувала', '1'),
+                                          ('магніт', '1')]))
 
     def test_words_with_frequency_when_min_len_is_3_desc(self):
         parser = srt_parser.SrtParser(file=path_to_file)
@@ -62,7 +74,12 @@ class TestSrtParser(unittest.TestCase):
                                           ('dealt', '1'), ('with', '1'), ('sir', '1'),
                                           ("who's", '1'), ('and', '1'), ("i'll", '1'),
                                           ('handle', '1'), ('god', '1'), ('than', '1'),
-                                          ('could', '1'), ('spend', '1'), ('lifetimes', '1')]))
+                                          ('could', '1'), ('spend', '1'), ('lifetimes', '1'),
+                                          ('know', '1'), ('you', '1'), ('think', '1'), ("i'm", '1'),
+                                          ('sociopath', '1'), ('ich', '1'), ('weiß', '1'), ('באה', '1'),
+                                          ('היא', '1'), ('הנה', '1'), ('noch', '1'), ('nicht', '1'),
+                                          ('genau', '1'), ('астральна', '1'), ('площина', '1'),
+                                          ('нагадувала', '1'), ('магніт', '1')]))
 
     def test_words_with_frequency_when_min_occurs_is_0(self):
         parser = srt_parser.SrtParser(file=path_to_file)
@@ -83,7 +100,13 @@ class TestSrtParser(unittest.TestCase):
                                           ('dealt', '1'), ('with', '1'), ('sir', '1'), ("who's", '1'),
                                           ('and', '1'), ("i'll", '1'), ('handle', '1'), ('it', '1'),
                                           ('god', '1'), ('than', '1'), ('could', '1'),
-                                          ('spend', '1'), ('in', '1'), ('lifetimes', '1')]))
+                                          ('spend', '1'), ('in', '1'), ('lifetimes', '1'),
+                                          ('know', '1'), ('you', '1'), ('think', '1'), ("i'm", '1'),
+                                          ('sociopath', '1'), ('ich', '1'), ('weiß', '1'), ('באה', '1'),
+                                          ('היא', '1'), ('הנה', '1'), ('זה', '1'), ('את', '1'), ('לך', '1'),
+                                          ('יש', '1'), ('noch', '1'), ('nicht', '1'), ('genau', '1'),
+                                          ('астральна', '1'), ('площина', '1'), ('нагадувала', '1'),
+                                          ('магніт', '1')]))
 
     def test_words_with_frequency_when_min_occurs_is_3_desc(self):
         parser = srt_parser.SrtParser(file=path_to_file)
