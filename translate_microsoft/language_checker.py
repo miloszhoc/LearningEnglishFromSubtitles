@@ -2,6 +2,7 @@ import requests
 from utils import exceptions
 
 
+# todo: split into 2 classes (for words and text)
 class CheckLanguage:
 
     # codes for all languages in dictionary scope
@@ -25,17 +26,13 @@ class CheckLanguage:
         return languages
 
     def check_lang_dictionary(self, src_lang, dest_lang):
+        # The only possibility according to Translator API documentation
+        # is to translate words from or to English.
+
         # Code checks if language given by user is in list with supported languages
         # if it is, src_lang will be set to value given by user
         # else it checks if user typed for example 'English',
         # if both cases are false exception will be raised.
-
-        # The only possibility according to Translator API documentation
-        # is to translate words from or to English.
-        # If source language is set to English program should ask about
-        # destination language.
-        # If source is set to different language than English program will
-        # automatically set destination language to English
 
         lang_codes = {}
         languages = self.show_all_languages_dictionary()
