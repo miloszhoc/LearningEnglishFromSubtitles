@@ -1,43 +1,13 @@
 import uuid
 
 import requests
-from translate_microsoft import language_checker
 
 
 # uses microsoft translator api
 class TranslateWordsMicrosoft:
     def __init__(self, words_list, api_key, src_lang, dest_lang):
-        # dictionary contains Language: code
-        # keys contains languages in readable form eg. 'English', 'Polish', 'German'
-        # values contains languages codes eg. 'en', 'fr', 'pl'
-        check_lang = language_checker.CheckLanguage()
-        languages = check_lang.show_all_languages_dictionary()
-        # todo: move language checking to external class
-
-        # Code checks if language given by user is in list with supported languages
-        # if it is, src_lang will be set to value given by user
-        # else it checks if user typed for example 'English',
-        # if both cases are false exception will be raised.
-
-        # The only possibility according to Translator API documentation
-        # is to translate words from or to English.
-        # If source language is set to English program should ask about
-        # destination language.
-        # If source is set to different language than English program will
-        # automatically set destination language to English
-        if src_lang == 'en':
-            self.src_lang = src_lang
-            if dest_lang in languages.values():
-                self.dest_lang = dest_lang
-            else:
-                self.dest_lang = check_lang.check_lang_dictionary(dest_lang)
-        else:
-            self.dest_lang = 'en'
-            if src_lang in languages.values():
-                self.src_lang = src_lang
-            else:
-                self.src_lang = check_lang.check_lang_dictionary(src_lang)
-
+        self.src_lang = src_lang
+        self.dest_lang = dest_lang
         self._words_list = words_list
         self._subscriptionKey = api_key
         self._translated_words = {}
