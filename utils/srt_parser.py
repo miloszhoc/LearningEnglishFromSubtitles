@@ -117,7 +117,7 @@ class SrtParser:
             line = next(file_line)  # reads first line in file
             while True:  # runs until EOF
                 while line != '\n':  # reads one group in file (until \n occurs)
-                    if re.search('[a-zA-Z]', line):
+                    if re.search('[^\W\d_]', line, flags=re.U):
                         text.append(line.rstrip('\n'))
                     else:
                         yield line
@@ -139,7 +139,7 @@ class SrtParser:
             line = next(file_line)  # reads first line in file
             while True:  # runs until EOF
                 while line != '\n':  # reads one group in file (until \n occurs)
-                    if re.search('[a-zA-Z]', line):
+                    if re.search('[^\W\d_]', line, flags=re.U):
                         text.append(line.rstrip('\n'))
                     else:
                         yield line
