@@ -40,7 +40,7 @@ _optional arguments:_
 `-w` shows all supported languages and codes for subtitles translation (for 'words', and 'wordsfreq' command)  
 `-t` shows all supported languages and codes for subtitles translation (for 'all', 'part' and 'double' command)
 
-* **words (w)**   
+* **words (w)**    
 _positional arguments:_   
 `srt_file`    file in .srt format   
 `src_lang `   source language   
@@ -49,7 +49,7 @@ _positional arguments:_
 _optional arguments:_   
 `-h --help` help message
 
-* **wordsfreq (f)**  
+* **wordsfreq (f)**    
 _positional arguments:_   
 `srt_file`    File in .srt format  
 `src_lang`    source language  
@@ -61,15 +61,15 @@ _positional arguments:_
 _optional arguments:_  
 ` -h, --help` help message
 
-* **all (a)**
-_positional arguments:_  
+* **all (a)**    
+_positional arguments:_    
 `srt_file`    file in .srt format  
 `dest_lang`   destination language  
 `out_file`    output file name (without extension)  
 _optional arguments:_  
 `-h, --help`  help message
 
-* **part (p)**
+* **part (p)**     
 _positional arguments:_   
 `srt_file` file in .srt format  
 `dest_lang`destination language  
@@ -79,7 +79,7 @@ _optional arguments:_
 `-t HH MM SS, --time HH MM SS` show by time  
 `-g GROUP, --group GROUP` show by group number  
 
-* **double (d)**  
+* **double (d)**   
 _positional arguments:_  
 `srt_file` file in .srt format   
 `dest_lang` destination language  
