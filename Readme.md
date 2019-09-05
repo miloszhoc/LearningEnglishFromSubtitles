@@ -1,10 +1,10 @@
 Lefs (LearningEnglishFromSubtitles)
 ---
-####Program translates words from subtitles or whole .srt file. 
+#### Program translates words from subtitles or whole .srt file. #### 
 
 (Based on Microsoft's Translator API)   
 To learn more click [here](https://docs.microsoft.com/en-us/azure/cognitive-services/translator/)
-####Features:
+#### Features: ####
 * **lang (l)** - command shows supported languages
 
 
@@ -19,11 +19,11 @@ only shows translated part without saving it to file. You can still redirect out
 * **double (d)** - command generates subtitles file in both languages (original language and language specified by user).
 
 
-####Installation:
+#### Installation: ####
 
 To see all commands - type `lefs -h`
 
-####Usage:
+#### Usage: ####
 1.    First check if language which you want to use is supported by API. In order to do that type `lefs lang -w` if you want to translate words,   
 or `lefs lang -t` if you want to translate text from subtitles.
 
@@ -33,7 +33,7 @@ Program should create new file in your current directory.
 **Note:** You can pass either readable form of language or just language's code.  
 
 Commands like _all_, _part_ and _double_ does not require specifying source language.
-####Arguments:
+#### Arguments: ####
 * **lang (l)**   
 _optional arguments:_  
 `-h, --help` show this help message and exit   
