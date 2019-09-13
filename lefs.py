@@ -6,7 +6,9 @@ from translate_microsoft import words_translator as words_translator
 from translate_microsoft import language_checker_subtitles
 from translate_microsoft import language_checker_words
 from translate_microsoft import subtitles_translator
-from utils import exceptions, srt_parser
+from utils import srt_parser
+from exceptions import parser_exceptions
+from exceptions import translator_exceptions
 
 
 def create_file(filename, content):
@@ -162,7 +164,7 @@ def main():
                                                                  api_key=api_key,
                                                                  src_lang=lang_dict['src'],
                                                                  dest_lang=lang_dict['dest'])
-            except (exceptions.LangDoesNotExists, exceptions.EnglishNotFound) as e:
+            except (translator_exceptions.LangDoesNotExists, translator_exceptions.EnglishNotFound) as e:
                 print(e.message)
             else:
                 print('Translation in progress...')
@@ -186,8 +188,8 @@ def main():
                                                                  api_key=api_key,
                                                                  src_lang=lang_dict['src'],
                                                                  dest_lang=lang_dict['dest'])
-            except (exceptions.LangDoesNotExists, exceptions.LenLessEqualZero,
-                    exceptions.OccursLessEqualZero, exceptions.EnglishNotFound) as e:
+            except (translator_exceptions.LangDoesNotExists, parser_exceptions.LenLessEqualZero,
+                    parser_exceptions.OccursLessEqualZero, translator_exceptions.EnglishNotFound) as e:
                 print(e.message)
             else:
                 print('Translation in progress...')
@@ -202,7 +204,7 @@ def main():
                 dest_lang = check_lang.check_lang_translation(args.dest_lang)
 
                 s_t = subtitles_translator.SubtitlesTranslatorMicrosoft(api_key, dest_lang=dest_lang)
-            except exceptions.LangDoesNotExists as e:
+            except translator_exceptions.LangDoesNotExists as e:
                 print(e.message)
             else:
                 print('\nTranslation in progress...')
@@ -219,19 +221,19 @@ def main():
                     part = subtitles_parser.part_subtitles(time=time)
                 except ValueError:
                     print('Wrong time format')
-                except exceptions.PartDoesNotExists as e:
+                except parser_exceptions.PartDoesNotExists as e:
                     print(e.message)
             elif args.group is not None:
                 try:
                     part = subtitles_parser.part_subtitles(group_num=args.group)
-                except exceptions.PartDoesNotExists as e:
+                except parser_exceptions.PartDoesNotExists as e:
                     print(e.message)
             try:
                 check_lang = language_checker_subtitles.CheckLanguageSubtitles()
                 dest_lang = check_lang.check_lang_translation(args.dest_lang)
 
                 trans = subtitles_translator.SubtitlesTranslatorMicrosoft(api_key, dest_lang=dest_lang)
-            except exceptions.LangDoesNotExists as e:
+            except translator_exceptions.LangDoesNotExists as e:
                 print(e.message)
             else:
                 translated = trans.translate(part)
@@ -243,7 +245,7 @@ def main():
                 dest_lang = check_lang.check_lang_translation(args.dest_lang)
 
                 s_t = subtitles_translator.SubtitlesTranslatorMicrosoft(api_key, dest_lang=dest_lang)
-            except exceptions.LangDoesNotExists as e:
+            except translator_exceptions.LangDoesNotExists as e:
                 print(e.message)
             else:
                 print('\nTranslation in progress...')

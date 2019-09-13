@@ -1,7 +1,7 @@
 import unittest
 
 from translate_microsoft import language_checker_words
-from utils import exceptions
+from exceptions import translator_exceptions
 
 
 class TestLanguageCheckerSubtitles(unittest.TestCase):
@@ -13,13 +13,13 @@ class TestLanguageCheckerSubtitles(unittest.TestCase):
         self.assertGreater(len(self.lc.show_all_languages_dictionary()), 0)
 
     def test_check_lang_dictionary_when_src_lang_does_not_exists(self):
-        self.assertRaises(exceptions.LangDoesNotExists,
+        self.assertRaises(translator_exceptions.LangDoesNotExists,
                           self.lc.check_lang_dictionary,
                           src_lang='abc',
                           dest_lang='en')
 
     def test_check_lang_dictionary_when_dest_lang_does_not_exists(self):
-        self.assertRaises(exceptions.LangDoesNotExists,
+        self.assertRaises(translator_exceptions.LangDoesNotExists,
                           self.lc.check_lang_dictionary,
                           src_lang='en',
                           dest_lang='pla')
@@ -49,7 +49,7 @@ class TestLanguageCheckerSubtitles(unittest.TestCase):
                                      'dest': 'en'})
 
     def test_check_lang_dictionary_when_none_of_languages_is_english(self):
-        self.assertRaises(exceptions.EnglishNotFound,
+        self.assertRaises(translator_exceptions.EnglishNotFound,
                           self.lc.check_lang_dictionary,
                           src_lang='greek',
                           dest_lang='de')

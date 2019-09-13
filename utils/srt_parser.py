@@ -3,7 +3,7 @@ import datetime
 import re
 
 import chardet
-from utils import exceptions
+from exceptions import parser_exceptions
 
 
 class SrtParser:
@@ -46,9 +46,9 @@ class SrtParser:
     # returns words with repetitions counter
     def words_with_frequency(self, descending=True, min_len=1, min_occurs=1):
         if min_len <= 0:
-            raise exceptions.LenLessEqualZero
+            raise parser_exceptions.LenLessEqualZero
         if min_occurs <= 0:
-            raise exceptions.OccursLessEqualZero
+            raise parser_exceptions.OccursLessEqualZero
 
         all_words = self.get_words_from_file()
         temp = set()
@@ -82,7 +82,7 @@ class SrtParser:
                     finally:
                         return text
             else:
-                raise exceptions.PartDoesNotExists
+                raise parser_exceptions.PartDoesNotExists
         else:
             time = datetime.datetime.strptime(time, '%H:%M:%S').time()
             for line in lines:
@@ -101,7 +101,7 @@ class SrtParser:
                         finally:
                             return text
             else:
-                raise exceptions.PartDoesNotExists
+                raise parser_exceptions.PartDoesNotExists
 
     # Method reads file line by line until EOF is reached.
     # Checks each line, if line contains any text it will be translated to

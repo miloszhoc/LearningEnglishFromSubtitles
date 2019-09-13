@@ -1,7 +1,7 @@
 import unittest
 
 from translate_microsoft import language_checker_subtitles
-from utils import exceptions
+from exceptions import translator_exceptions
 
 
 class TestLanguageCheckerSubtitles(unittest.TestCase):
@@ -19,4 +19,4 @@ class TestLanguageCheckerSubtitles(unittest.TestCase):
         self.assertEqual(self.lc.check_lang_translation('to'), 'to')
 
     def test_check_lang_translation_when_lang_does_not_exists(self):
-        self.assertRaises(exceptions.LangDoesNotExists, self.lc.check_lang_translation, 'qwerty')
+        self.assertRaises(translator_exceptions.LangDoesNotExists, self.lc.check_lang_translation, 'qwerty')

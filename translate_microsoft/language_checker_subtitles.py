@@ -1,5 +1,5 @@
 import requests
-from utils import exceptions
+from exceptions import translator_exceptions
 
 
 class CheckLanguageSubtitles:
@@ -21,7 +21,7 @@ class CheckLanguageSubtitles:
         elif dest_lang.capitalize() in languages:
             dest_lang = languages[dest_lang.capitalize()]
         else:
-            raise exceptions.LangDoesNotExists
+            raise translator_exceptions.LangDoesNotExists
         return dest_lang
 
     # def detect_language(self, line):

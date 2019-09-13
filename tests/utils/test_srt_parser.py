@@ -1,5 +1,6 @@
 import unittest
-from utils import exceptions, srt_parser
+from utils import srt_parser
+from exceptions import parser_exceptions
 
 # file contains some possible scenarios
 path_to_file = r'tests/subtitles/part_to_test.srt'
@@ -42,12 +43,12 @@ class TestSrtParser(unittest.TestCase):
     def test_words_with_frequency_when_min_len_is_0(self):
         parser = srt_parser.SrtParser(file=path_to_file)
         words = parser.words_with_frequency
-        self.assertRaises(exceptions.LenLessEqualZero, words, min_len=0)
+        self.assertRaises(parser_exceptions.LenLessEqualZero, words, min_len=0)
 
     def test_words_with_frequency_when_min_len_is_negative(self):
         parser = srt_parser.SrtParser(file=path_to_file)
         words = parser.words_with_frequency
-        self.assertRaises(exceptions.LenLessEqualZero, words, min_len=-1)
+        self.assertRaises(parser_exceptions.LenLessEqualZero, words, min_len=-1)
 
     def test_words_with_frequency_when_min_len_is_default_desc(self):
         parser = srt_parser.SrtParser(file=path_to_file)
@@ -84,12 +85,12 @@ class TestSrtParser(unittest.TestCase):
     def test_words_with_frequency_when_min_occurs_is_0(self):
         parser = srt_parser.SrtParser(file=path_to_file)
         words = parser.words_with_frequency
-        self.assertRaises(exceptions.OccursLessEqualZero, words, min_occurs=0)
+        self.assertRaises(parser_exceptions.OccursLessEqualZero, words, min_occurs=0)
 
     def test_words_with_frequency_when_min_occurs_is_negative(self):
         parser = srt_parser.SrtParser(file=path_to_file)
         words = parser.words_with_frequency
-        self.assertRaises(exceptions.OccursLessEqualZero, words, min_occurs=-2)
+        self.assertRaises(parser_exceptions.OccursLessEqualZero, words, min_occurs=-2)
 
     def test_words_with_frequency_when_min_occurs_is_default_desc(self):
         parser = srt_parser.SrtParser(file=path_to_file)
@@ -131,12 +132,12 @@ class TestSrtParser(unittest.TestCase):
     def test_part_subtitles_when_num_not_in_srt_file(self):
         parser = srt_parser.SrtParser(file=path_to_file)
         part = parser.part_subtitles
-        self.assertRaises(exceptions.PartDoesNotExists, part, group_num='58')
+        self.assertRaises(parser_exceptions.PartDoesNotExists, part, group_num='58')
 
     def test_part_subtitles_when_num_is_not_number(self):
         parser = srt_parser.SrtParser(file=path_to_file)
         part = parser.part_subtitles
-        self.assertRaises(exceptions.PartDoesNotExists, part, group_num='x')
+        self.assertRaises(parser_exceptions.PartDoesNotExists, part, group_num='x')
 
     def test_part_subtitles_when_time_is_passed(self):
         parser = srt_parser.SrtParser(file=path_to_file)
@@ -146,7 +147,7 @@ class TestSrtParser(unittest.TestCase):
     def test_part_subtitles_when_not_existing_time_is_passed(self):
         parser = srt_parser.SrtParser(file=path_to_file)
         part = parser.part_subtitles
-        self.assertRaises(exceptions.PartDoesNotExists, part, time='00:11:17')
+        self.assertRaises(parser_exceptions.PartDoesNotExists, part, time='00:11:17')
 
     def test_part_subtitles_when_wrong_time_format_is_passed(self):
         parser = srt_parser.SrtParser(file=path_to_file)

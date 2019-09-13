@@ -1,5 +1,5 @@
 import requests
-from utils import exceptions
+from exceptions import translator_exceptions
 
 
 # codes for all languages in dictionary scope
@@ -33,7 +33,7 @@ class CheckLanguageWords:
                 if dest_lang.capitalize() in languages:
                     lang_codes['dest'] = languages[dest_lang.capitalize()]
                 else:
-                    raise exceptions.LangDoesNotExists
+                    raise translator_exceptions.LangDoesNotExists
 
         elif dest_lang == 'en' or dest_lang.capitalize() == 'English':
             lang_codes['dest'] = 'en'
@@ -43,8 +43,8 @@ class CheckLanguageWords:
                 if src_lang.capitalize() in languages:
                     lang_codes['src'] = languages[src_lang.capitalize()]
                 else:
-                    raise exceptions.LangDoesNotExists
+                    raise translator_exceptions.LangDoesNotExists
 
         else:
-            raise exceptions.EnglishNotFound
+            raise translator_exceptions.EnglishNotFound
         return lang_codes
