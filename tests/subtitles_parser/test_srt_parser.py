@@ -1,5 +1,5 @@
 import unittest
-from utils import srt_parser
+from parser import srt_parser
 from exceptions import parser_exceptions
 
 # file contains some possible scenarios
