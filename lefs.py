@@ -2,19 +2,17 @@ import argparse
 
 import requests
 
-from translate_microsoft import words_translator as words_translator
 from translate_microsoft import language_checker_subtitles
 from translate_microsoft import language_checker_words
-from translate_microsoft import subtitles_translator
-from utils import srt_parser
-from exceptions import parser_exceptions
-from exceptions import translator_exceptions
+from translator import Translator
 
 
-def create_file(filename, content):
+def create_file(self, filename, content):
     with open(filename + '.txt', 'a+', encoding='utf-8')as f:
         f.write(content + '\n')
 
+
+# todo: add progress bar
 
 def main():
     api_key = '9dcd4058b8ee4bd88b9838bda9a6f890'
@@ -151,109 +149,31 @@ def main():
             langs = language_checker_subtitles.CheckLanguageSubtitles()
             for k, v in langs.show_all_languages_translation().items():
                 print(k, '-', v)
+
+        translate = None
+        if 'srt_file' in args:
+            translate = Translator(api_key, args.srt_file)
         if args.subparser_name == 'words' or args.subparser_name == 'w':
-            print('This command supports translation only from or to English!')
-            try:
-                subtitles_parser = srt_parser.SrtParser(args.srt_file)
-                words = subtitles_parser.words_without_repetitions()
-
-                check_lang = language_checker_words.CheckLanguageWords()
-                lang_dict = check_lang.check_lang_dictionary(args.src_lang, args.dest_lang)
-
-                trans = words_translator.TranslateWordsMicrosoft(words_list=words,
-                                                                 api_key=api_key,
-                                                                 src_lang=lang_dict['src'],
-                                                                 dest_lang=lang_dict['dest'])
-            except (translator_exceptions.LangDoesNotExists, translator_exceptions.EnglishNotFound) as e:
-                print(e.message)
-            else:
-                print('Translation in progress...')
-                for word, translation in trans.translate_words().items():
-                    content = word + '-' + translation
-                    create_file(args.out_file, content)
-                print('All translated!')
+            translate.translate_words(args.src_lang,
+                                      args.dest_lang,
+                                      args.out_file)
         if args.subparser_name == 'wordsfreq' or args.subparser_name == 'f':
-            print('This command supports translation only from or to English!')
-
-            try:
-                subtitles_parser = srt_parser.SrtParser(args.srt_file)
-
-                check_lang = language_checker_words.CheckLanguageWords()
-                lang_dict = check_lang.check_lang_dictionary(args.src_lang, args.dest_lang)
-
-                words = subtitles_parser.words_with_frequency(descending=True if args.sort == 'desc' else False,
-                                                              min_len=args.min_len,
-                                                              min_occurs=args.min_occurs)
-                trans = words_translator.TranslateWordsMicrosoft(words_list=words,
-                                                                 api_key=api_key,
-                                                                 src_lang=lang_dict['src'],
-                                                                 dest_lang=lang_dict['dest'])
-            except (translator_exceptions.LangDoesNotExists, parser_exceptions.LenLessEqualZero,
-                    parser_exceptions.OccursLessEqualZero, translator_exceptions.EnglishNotFound) as e:
-                print(e.message)
-            else:
-                print('Translation in progress...')
-                for word, translation in trans.translate_words_with_frequency().items():
-                    content = word + '-' + translation[0] + ' (' + translation[1] + ')'
-                    create_file(args.out_file, content)
-                print('All translated!')
+            translate.translate_wordsfreq(args.src_lang,
+                                          args.dest_lang,
+                                          args.sort,
+                                          args.min_len,
+                                          args.min_occurs,
+                                          args.out_file)
         if args.subparser_name == 'all' or args.subparser_name == 'a':
-            subtitles_parser = srt_parser.SrtParser(args.srt_file)
-            try:
-                check_lang = language_checker_subtitles.CheckLanguageSubtitles()
-                dest_lang = check_lang.check_lang_translation(args.dest_lang)
-
-                s_t = subtitles_translator.SubtitlesTranslatorMicrosoft(api_key, dest_lang=dest_lang)
-            except translator_exceptions.LangDoesNotExists as e:
-                print(e.message)
-            else:
-                print('\nTranslation in progress...')
-                for line in subtitles_parser.entire_subtitles(s_t.translate):
-                    with open(args.out_file + '.srt', 'a+', encoding='utf-8') as f:
-                        f.write(line)
-                print('All translated')
+            translate.translate_all(args.dest_lang,
+                                    args.out_file)
         if args.subparser_name == 'part' or args.subparser_name == 'p':
-            subtitles_parser = srt_parser.SrtParser(args.srt_file)
-            part = None
-            if args.time is not None:
-                time = ':'.join(args.time)
-                try:
-                    part = subtitles_parser.part_subtitles(time=time)
-                except ValueError:
-                    print('Wrong time format')
-                except parser_exceptions.PartDoesNotExists as e:
-                    print(e.message)
-            elif args.group is not None:
-                try:
-                    part = subtitles_parser.part_subtitles(group_num=args.group)
-                except parser_exceptions.PartDoesNotExists as e:
-                    print(e.message)
-            try:
-                check_lang = language_checker_subtitles.CheckLanguageSubtitles()
-                dest_lang = check_lang.check_lang_translation(args.dest_lang)
-
-                trans = subtitles_translator.SubtitlesTranslatorMicrosoft(api_key, dest_lang=dest_lang)
-            except translator_exceptions.LangDoesNotExists as e:
-                print(e.message)
-            else:
-                translated = trans.translate(part)
-                print(translated)
+            translate.translate_part(args.time,
+                                     args.group,
+                                     args.dest_lang)
         if args.subparser_name == 'double' or args.subparser_name == 'd':
-            subtitles_parser = srt_parser.SrtParser(args.srt_file)
-            try:
-                check_lang = language_checker_subtitles.CheckLanguageSubtitles()
-                dest_lang = check_lang.check_lang_translation(args.dest_lang)
-
-                s_t = subtitles_translator.SubtitlesTranslatorMicrosoft(api_key, dest_lang=dest_lang)
-            except translator_exceptions.LangDoesNotExists as e:
-                print(e.message)
-            else:
-                print('\nTranslation in progress...')
-                for line in subtitles_parser.double_subtitles(s_t.translate):
-                    with open(args.out_file + '.srt', 'a+', encoding='utf-8') as f:
-                        f.write(line)
-                print('All translated')
-
+            translate.translate_double(args.dest_lang,
+                                       args.out_file)
     except requests.exceptions.ConnectionError:
         print('Check your Internet connection!')
 
