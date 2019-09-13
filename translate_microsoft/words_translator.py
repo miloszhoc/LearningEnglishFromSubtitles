@@ -3,6 +3,7 @@ import uuid
 import requests
 
 
+# todo: add language auto detect
 # uses microsoft translator api
 class TranslateWordsMicrosoft:
     def __init__(self, words_list, api_key, src_lang, dest_lang):
