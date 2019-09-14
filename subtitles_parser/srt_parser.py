@@ -30,14 +30,15 @@ class SrtParser:
     # returns all words form file (with repetitions)
     def get_words_from_file(self):
         all_words = []
-        # pattern_without_num = r"\D"  # get rid of all numbers
         pattern_text = r"[^\W\d_]+'?[^\W\d_]+"  # search only for text
         # iterates through lines of file and extends
         # words list by only words from subtitles
         for i in self.read_srt_file():
-            # if re.match(pattern_without_num, i, re.UNICODE):
-            all_words.extend(re.findall(pattern_text, i.lower()))
-        return all_words
+            all_words.extend(re.findall(pattern_text, i.lower(), re.U))
+        if all_words:
+            return all_words
+        else:
+            raise parser_exceptions.EmptyFile
 
     # returns words without repetitions
     def words_without_repetitions(self):

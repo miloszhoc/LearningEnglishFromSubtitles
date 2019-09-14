@@ -26,7 +26,8 @@ class Translator:
                                                              api_key=self.api_key,
                                                              src_lang=lang_dict['src'],
                                                              dest_lang=lang_dict['dest'])
-        except (translator_exceptions.LangDoesNotExists, translator_exceptions.EnglishNotFound) as e:
+        except (translator_exceptions.LangDoesNotExists, translator_exceptions.EnglishNotFound,
+                parser_exceptions.EmptyFile) as e:
             print(e.message)
         else:
             print('Translation in progress...')
@@ -49,7 +50,8 @@ class Translator:
                                                              src_lang=lang_dict['src'],
                                                              dest_lang=lang_dict['dest'])
         except (translator_exceptions.LangDoesNotExists, parser_exceptions.LenLessEqualZero,
-                parser_exceptions.OccursLessEqualZero, translator_exceptions.EnglishNotFound) as e:
+                parser_exceptions.OccursLessEqualZero, translator_exceptions.EnglishNotFound,
+                parser_exceptions.EmptyFile) as e:
             print(e.message)
         else:
             print('Translation in progress...')

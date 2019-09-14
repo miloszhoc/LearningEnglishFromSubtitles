@@ -4,6 +4,7 @@ from exceptions import parser_exceptions
 
 # file contains some possible scenarios
 path_to_file = r'tests/subtitles/part_to_test.srt'
+path_to_empty_file = r'tests/subtitles/empty.srt'
 
 
 class TestSrtParser(unittest.TestCase):
@@ -23,6 +24,11 @@ class TestSrtParser(unittest.TestCase):
                                      'יש', 'לך', 'את', 'זה', 'הנה', 'היא', 'באה', 'ich', 'weiß',
                                      'noch', 'nicht', 'genau', 'астральна', 'площина', 'нагадувала',
                                      'магніт'])
+
+    def test_get_words_from_file_when_file_is_empty(self):
+        parser = srt_parser.SrtParser(file=path_to_empty_file)
+        words = parser.get_words_from_file
+        self.assertRaises(parser_exceptions.EmptyFile, words)
 
     def test_words_without_repetitions(self):
         parser = srt_parser.SrtParser(file=path_to_file)

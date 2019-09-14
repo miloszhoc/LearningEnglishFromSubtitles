@@ -22,3 +22,8 @@ class LenLessEqualZero(ParserExceptions):
 class OccursLessEqualZero(ParserExceptions):
     def __init__(self):
         super().__init__('Number of word occurrences should be positive integer')
+
+
+class EmptyFile(ParserExceptions):
+    def __init__(self):
+        super().__init__('File is empty')
