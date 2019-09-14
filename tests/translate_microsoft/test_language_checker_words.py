@@ -1,6 +1,6 @@
 import unittest
 
-from translate_microsoft import language_checker_words
+from translate_microsoft.modules import language_checker_words
 from exceptions import translator_exceptions
 
 

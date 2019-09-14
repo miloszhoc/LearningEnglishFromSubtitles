@@ -2,9 +2,8 @@ import argparse
 
 import requests
 
-from translate_microsoft import language_checker_subtitles
-from translate_microsoft import language_checker_words
-from translator import Translator
+from translate_microsoft.modules import language_checker_subtitles, language_checker_words
+from translate_microsoft.translator import Translator
 
 
 def create_file(self, filename, content):
@@ -13,7 +12,6 @@ def create_file(self, filename, content):
 
 
 # todo: add progress bar
-
 def main():
     api_key = '9dcd4058b8ee4bd88b9838bda9a6f890'
     parser = argparse.ArgumentParser(prog='lefs',

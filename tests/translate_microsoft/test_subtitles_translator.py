@@ -1,5 +1,5 @@
 import unittest
-from translate_microsoft import subtitles_translator
+from translate_microsoft.modules import subtitles_translator
 from . import api_key
 
 

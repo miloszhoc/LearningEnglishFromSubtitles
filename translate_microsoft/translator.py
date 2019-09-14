@@ -1,5 +1,5 @@
-from translate_microsoft.modules import language_checker_subtitles, language_checker_words, subtitles_translator, \
-    words_translator as words_translator
+from translate_microsoft.modules import language_checker_subtitles, language_checker_words, \
+    subtitles_translator, words_translator as words_translator
 from subtitles_parser import srt_parser
 from exceptions import parser_exceptions
 from exceptions import translator_exceptions
