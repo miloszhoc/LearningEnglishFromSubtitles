@@ -20,11 +20,14 @@ only shows translated part without saving it to file. You can still redirect out
 
 
 ### Installation: ###
-
-To see all commands - type `lefs -h`
+1.    Clone repository using `git clone https://github.com/miloszhoc/LearningEnglishFromSubtitles.git` command.
+2.    cd into _LearningEnglishFromSubtitles_ folder.
+3.    Type `python setup.py install` or `python3 setup.py install` in order to install program.
+    
+   To see all commands - type `lefs -h`
 
 ### Usage: ###
-1.    First check if language which you want to use is supported by API. In order to do that type `lefs lang -w` if you want to translate words, or `lefs lang -t` if you want to translate text from subtitles.
+1.    Check if language which you want to use is supported by API. In order to do that type `lefs lang -w` if you want to translate words, or `lefs lang -t` if you want to translate text from subtitles.
 
 2.    If you want to translate eg. words with frequency counter, type:  
 `lefs wordsfreq [path to .srt file] [source language of subtitles] [destination language] [minimal length of each word] [minimal occurs number] [sort] [output file name]`   
