@@ -24,11 +24,10 @@ only shows translated part without saving it to file. You can still redirect out
 To see all commands - type `lefs -h`
 
 ### Usage: ###
-1.    First check if language which you want to use is supported by API. In order to do that type `lefs lang -w` if you want to translate words,   
-or `lefs lang -t` if you want to translate text from subtitles.
+1.    First check if language which you want to use is supported by API. In order to do that type `lefs lang -w` if you want to translate words, or `lefs lang -t` if you want to translate text from subtitles.
 
 2.    If you want to translate eg. words with frequency counter, type:  
-`lefs words [path to .srt file] [source language of subtitles] [destination language] [minimal length of each word] [minimal occurs number] [sort] [output file name]`   
+`lefs wordsfreq [path to .srt file] [source language of subtitles] [destination language] [minimal length of each word] [minimal occurs number] [sort] [output file name]`   
 Program should create new file in your current directory.  
 **Note:** You can pass either readable form of language or just language's code.  
 
@@ -86,3 +85,6 @@ _positional arguments:_
 `out_file` output file name (without extension)  
 _optional arguments:_  
 `-h, --help`  help message
+
+### Used modules ###
+*    _requests_
