@@ -1,6 +1,6 @@
 import unittest
 from translate_microsoft.modules import subtitles_translator
-from . import api_key
+from tests.translate_microsoft import api_key
 
 
 class TestSubtitlesTranslator(unittest.TestCase):

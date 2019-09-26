@@ -1,11 +1,10 @@
 import unittest
 from translate_microsoft.modules import words_translator
-from . import api_key
+from tests.translate_microsoft import api_key
 
 words_list = ['mr', 'white', 'hello', 'mr', 'white', 'the', "car's"]
 
 
-# todo: add more tests
 class TestTranslateWordsMicrosoft(unittest.TestCase):
 
     def test_translate_words(self):
