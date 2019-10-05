@@ -13,3 +13,8 @@ class LangDoesNotExists(TranslatorExceptions):
 class EnglishNotFound(TranslatorExceptions):
     def __init__(self):
         super().__init__('Either source language or destination language has to be English')
+
+
+class InvalidApiKey(TranslatorExceptions):
+    def __init__(self):
+        super().__init__('Make sure that your API Key is valid')
