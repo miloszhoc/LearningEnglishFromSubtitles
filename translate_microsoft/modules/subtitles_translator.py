@@ -1,5 +1,7 @@
 import requests
 import uuid
+from exceptions import translator_exceptions
+
 
 # translate subtitles using Microsoft Translator
 class SubtitlesTranslatorMicrosoft:
@@ -26,7 +28,7 @@ class SubtitlesTranslatorMicrosoft:
         if r.status_code == 200:
             return r.json()[0]['translations'][0]['text']
         else:
-            return False
+            raise translator_exceptions.InvalidApiKey
 
     # returns translated part of subtitles
     def translate(self, content):

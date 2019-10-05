@@ -1,5 +1,5 @@
 import uuid
-
+from exceptions import translator_exceptions
 import requests
 
 
@@ -38,7 +38,7 @@ class TranslateWordsMicrosoft:
                 if req.status_code == 200:
                     yield req.json()
                 else:
-                    return False
+                    raise translator_exceptions.InvalidApiKey
         else:
             for word in self._words_list:
                 # body contains text to translate
@@ -51,7 +51,7 @@ class TranslateWordsMicrosoft:
                 if req.status_code == 200:
                     yield req.json()
                 else:
-                    return False
+                    raise translator_exceptions.InvalidApiKey
 
     def translate_words(self):
         for i in self._construct_request():
