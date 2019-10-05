@@ -31,10 +31,14 @@ class Translator:
             print(e.message)
         else:
             print('Translation in progress...')
-            for word, translation in trans.translate_words().items():
-                content = word + '-' + translation
-                self._create_file(out_file, content)
-            print('All translated!')
+            try:
+                for word, translation in trans.translate_words().items():
+                    content = word + '-' + translation
+                    self._create_file(out_file, content)
+            except translator_exceptions.InvalidApiKey as e:
+                print(e.message)
+            else:
+                print('All translated!')
 
     def translate_wordsfreq(self, src_lang, dest_lang, sort, min_len, min_occurs, out_file):
         print('This command supports translation only from or to English!')
@@ -55,10 +59,14 @@ class Translator:
             print(e.message)
         else:
             print('Translation in progress...')
-            for word, translation in trans.translate_words_with_frequency().items():
-                content = word + '-' + translation[0] + ' (' + translation[1] + ')'
-                self._create_file(out_file, content)
-            print('All translated!')
+            try:
+                for word, translation in trans.translate_words_with_frequency().items():
+                    content = word + '-' + translation[0] + ' (' + translation[1] + ')'
+                    self._create_file(out_file, content)
+            except translator_exceptions.InvalidApiKey as e:
+                print(e.message)
+            else:
+                print('All translated!')
 
     def translate_all(self, dest_lang, out_file):
         try:
@@ -70,10 +78,14 @@ class Translator:
             print(e.message)
         else:
             print('\nTranslation in progress...')
-            for line in self.subtitles_parser.entire_subtitles(s_t.translate):
-                with open(out_file + '.srt', 'a+', encoding='utf-8') as f:
-                    f.write(line)
-            print('All translated')
+            try:
+                for line in self.subtitles_parser.entire_subtitles(s_t.translate):
+                    with open(out_file + '.srt', 'a+', encoding='utf-8') as f:
+                        f.write(line)
+            except translator_exceptions.InvalidApiKey as e:
+                print(e.message)
+            else:
+                print('All translated')
 
     def translate_part(self, time, group, dest_lang):
         part = None
@@ -101,8 +113,12 @@ class Translator:
         except translator_exceptions.LangDoesNotExists as e:
             print(e.message)
         else:
-            translated = trans.translate(part)
-            print(translated)
+            try:
+                translated = trans.translate(part)
+            except translator_exceptions.InvalidApiKey as e:
+                print(e.message)
+            else:
+                print(translated)
 
     def translate_double(self, dest_lang, out_file):
         try:
@@ -114,7 +130,11 @@ class Translator:
             print(e.message)
         else:
             print('\nTranslation in progress...')
-            for line in self.subtitles_parser.double_subtitles(s_t.translate):
-                with open(out_file + '.srt', 'a+', encoding='utf-8') as f:
-                    f.write(line)
-            print('All translated')
+            try:
+                for line in self.subtitles_parser.double_subtitles(s_t.translate):
+                    with open(out_file + '.srt', 'a+', encoding='utf-8') as f:
+                        f.write(line)
+            except translator_exceptions.InvalidApiKey as e:
+                print(e.message)
+            else:
+                print('All translated')
